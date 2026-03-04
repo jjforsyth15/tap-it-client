@@ -134,8 +134,8 @@ Re-exports ApiError, request, USE_REAL_API, API_BASE, routes, and all auth endpo
 Backend: None.
 
 Constants (src/constants/)
-
 securityQuestions.ts
+
 List of security questions (id + label) for registration and recovery dropdowns; type SecurityQuestionId.
 Backend: Backend can use the same IDs or extend; store questionId + hashed answer per user; validate answers in verify-security-answers.
 Backend checklist
