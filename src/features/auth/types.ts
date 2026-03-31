@@ -1,3 +1,5 @@
+// define the structure of data sent between the frontend and backend for your authentication system.
+
 export type LoginPayload = {
   email: string;
   password: string;

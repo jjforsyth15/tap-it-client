@@ -1,16 +1,18 @@
+// Mock API service Layer
+
 import type {
   LoginPayload,
   LoginResponse,
-  RegisterPayload,
-  RegisterResponse,
   RecoverEmailPayload,
   RecoverEmailResponse,
   RecoverPasswordPayload,
   RecoverPasswordResponse,
-  VerifySecurityAnswersPayload,
-  VerifySecurityAnswersResponse,
+  RegisterPayload,
+  RegisterResponse,
   SubmitSecurityQuestionsPayload,
   SubmitSecurityQuestionsResponse,
+  VerifySecurityAnswersPayload,
+  VerifySecurityAnswersResponse,
 } from './types';
 
 export class ApiError extends Error {

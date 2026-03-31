@@ -89,7 +89,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 24,
     fontWeight: '700',
-    color: '#e4e4e7',
+    color: 'white', 
     marginBottom: 24,
   },
   links: {

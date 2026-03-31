@@ -1,3 +1,5 @@
+// check if input is valid before sending it to BE 
+
 export type ValidationResult = { valid: true } | { valid: false; message: string };
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;

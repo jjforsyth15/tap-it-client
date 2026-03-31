@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Animated Navy Background</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      overflow: hidden;
+      background: #020817;
+      height: 100vh;
+      width: 100vw;
+      font-family: Arial, sans-serif;
+    }
+
+    .background {
+      position: relative;
+      width: 100%;
+      height: 100vh;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at center,
+          #1e3a5f 0%,
+          #0b1f3a 30%,
+          #061427 55%,
+          #020817 100%);
+    }
+
+    /* soft center glow */
+    
+    .background {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at center,
+      #0b1a2a 0%,     /* subtle center */
+      #050f1d 25%,
+      #030a14 55%,
+      #010409 100%   /* almost black edges */
+    );
+}
+
+/* softer glow — less aggressive */
+.background::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at center,
+    rgba(80, 140, 220, 0.10) 0%,
+    rgba(40, 90, 160, 0.06) 20%,
+    rgba(10, 30, 70, 0.03) 40%,
+    transparent 65%);
+  animation: pulseGlow 8s ease-in-out infinite;
+}
+
+/* darker, cleaner lines */
+.line {
+  position: absolute;
+  bottom: -150px;
+  width: 1.5px;
+  height: 160px;
+
+  background: linear-gradient(
+    to top,
+    rgba(255,255,255,0),
+    rgba(80,140,220,0.10),
+    rgba(120,180,255,0.45),
+    rgba(255,255,255,0)
+  );
+
+  border-radius: 999px;
+  animation: rise linear infinite;
+  opacity: 0.5;
+  filter: blur(0.6px);
+
+  /* subtle glow instead of bright neon */
+  box-shadow: 0 0 6px rgba(80, 140, 220, 0.2);
+}
+
+@keyframes rise {
+  0% {
+    transform: translateY(0);
+    opacity: 0;
+  }
+  15% {
+    opacity: 0.5;
+  }
+  80% {
+    opacity: 0.3;
+  }
+  100% {
+    transform: translateY(-120vh);
+    opacity: 0;
+  }
+}
+
+@keyframes pulseGlow {
+  0%, 100% {
+    opacity: 0.6;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.8;
+    transform: scale(1.05);
+  }
+}
+
+
+    .content {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 2rem;
+      z-index: 2;
+      pointer-events: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="background">
+    <div class="line" style="left: 5%; animation-duration: 7s; animation-delay: 0s;"></div>
+    <div class="line" style="left: 12%; animation-duration: 9s; animation-delay: 1s;"></div>
+    <div class="line" style="left: 18%; animation-duration: 6s; animation-delay: 2s;"></div>
+    <div class="line" style="left: 25%; animation-duration: 8s; animation-delay: 0.5s;"></div>
+    <div class="line" style="left: 33%; animation-duration: 10s; animation-delay: 1.5s;"></div>
+    <div class="line" style="left: 40%; animation-duration: 7.5s; animation-delay: 3s;"></div>
+    <div class="line" style="left: 48%; animation-duration: 6.5s; animation-delay: 1s;"></div>
+    <div class="line" style="left: 56%; animation-duration: 8.5s; animation-delay: 2.5s;"></div>
+    <div class="line" style="left: 64%; animation-duration: 9.5s; animation-delay: 0.8s;"></div>
+    <div class="line" style="left: 72%; animation-duration: 7.2s; animation-delay: 2.2s;"></div>
+    <div class="line" style="left: 80%; animation-duration: 11s; animation-delay: 1.2s;"></div>
+    <div class="line" style="left: 88%; animation-duration: 8s; animation-delay: 3.2s;"></div>
+    <div class="line" style="left: 95%; animation-duration: 6.8s; animation-delay: 0.3s;"></div>
+
+    <div class="content"></div>
+  </div>
+</body>
+</html>
