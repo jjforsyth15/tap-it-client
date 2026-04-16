@@ -1,17 +1,36 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { router } from 'expo-router';
 import { Screen } from '@/src/components/Screen';
 import { PrimaryButton } from '@/src/components/PrimaryButton';
+import { useUserProfile } from '@/src/features/profile/UserProfileContext';
 
 export default function SuccessAccountMadeScreen() {
+  const { refreshFromServer } = useUserProfile();
+  const [loading, setLoading] = useState(false);
+
+  const goHome = async () => {
+    setLoading(true);
+    try {
+      await refreshFromServer();
+      router.replace('/home');
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <Screen>
       <View style={styles.box}>
         <Text style={styles.title}>Account created</Text>
-        <Text style={styles.subtitle}>You can now log in with your new account.</Text>
+        <Text style={styles.subtitle}>You are signed in. Continue to the app or go back to log in.</Text>
       </View>
-      <PrimaryButton title="Back to log in" onPress={() => router.replace('/(auth)/login')} />
+      <PrimaryButton title="Continue to app" onPress={goHome} loading={loading} />
+      <PrimaryButton
+        title="Back to log in"
+        onPress={() => router.replace('/(auth)/login')}
+        style={styles.secondary}
+      />
     </Screen>
   );
 }
@@ -34,5 +53,9 @@ const styles = StyleSheet.create({
   subtitle: {
     fontSize: 14,
     color: '#94a3b8',
+  },
+  secondary: {
+    marginTop: 12,
+    backgroundColor: '#2a2a30',
   },
 });

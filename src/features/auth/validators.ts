@@ -1,3 +1,5 @@
+// check if input is valid before sending it to BE 
+
 export type ValidationResult = { valid: true } | { valid: false; message: string };
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -34,7 +36,7 @@ export function validateEmailMatch(email: string, confirmEmail: string): Validat
   return { valid: true };
 }
 
-export function validatePasswordLength(password: string, minLength = 6): ValidationResult {
+export function validatePasswordLength(password: string, minLength = 8): ValidationResult {
   if (password.length < minLength) {
     return { valid: false, message: `Password must be at least ${minLength} characters.` };
   }

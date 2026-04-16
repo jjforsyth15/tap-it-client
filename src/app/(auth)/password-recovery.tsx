@@ -7,7 +7,8 @@ import { PrimaryButton } from '@/src/components/PrimaryButton';
 import { LinkText } from '@/src/components/LinkText';
 import { ErrorBanner } from '@/src/components/ErrorBanner';
 import { validateRecoverPasswordForm } from '@/src/features/auth/validators';
-import { recoverPassword, ApiError } from '@/src/features/auth/auth.api';
+import { getAuthErrorMessage, requestPasswordRecoveryQuestions } from '@/src/features/auth/auth.api';
+import { setPasswordRecoveryDraft } from '@/src/features/auth/passwordRecoveryDraft';
 
 export default function PasswordRecoveryScreen() {
   const [phone, setPhone] = useState('');
@@ -24,20 +25,26 @@ export default function PasswordRecoveryScreen() {
     }
     setLoading(true);
     try {
-      const response = await recoverPassword({ phone: phone.trim(), email: email.trim() });
-      if ('inSystem' in response && !response.inSystem) {
+      const response = await requestPasswordRecoveryQuestions({
+        phone: phone.trim(),
+        email: email.trim(),
+      });
+      if ('inSystem' in response && response.inSystem === false) {
         setError('Not in system.');
         return;
       }
-      if ('sent' in response && response.sent) {
-        router.replace('/(auth)/password-recovery-result');
+      if ('questions' in response && response.questions.length >= 3) {
+        setPasswordRecoveryDraft({
+          phone: phone.trim(),
+          email: email.trim(),
+          questions: response.questions,
+        });
+        router.push('/(auth)/security-questions');
+        return;
       }
+      setError('Not in system.');
     } catch (err) {
-      if (err instanceof ApiError) {
-        setError(err.message || 'Not in system.');
-      } else {
-        router.replace('/(auth)/server-error');
-      }
+      setError(getAuthErrorMessage(err));
     } finally {
       setLoading(false);
     }

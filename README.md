@@ -23,7 +23,13 @@ In the output, you'll find options to open the app in a
 - [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
 - [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+You can start developing by editing the files inside **`src/app`** (Expo Router root is set in `app.json`). This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+
+### TapIt API (Python backend)
+
+1. Run `tap-it-server` with Uvicorn (`PYTHONPATH=. uvicorn app.main:app --reload --host 0.0.0.0 --port 8000`).
+2. Optional: copy `.env.example` to `.env` in this folder. To use your Mac’s LAN IP automatically on a **physical phone**, leave `EXPO_PUBLIC_API_BASE_URL` unset; otherwise set it explicitly.
+3. After changing `.env`, restart Metro with `npx expo start -c`.
 
 ## Get a fresh project
 

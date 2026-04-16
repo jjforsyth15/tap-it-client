@@ -7,7 +7,7 @@ import { PrimaryButton } from '@/src/components/PrimaryButton';
 import { LinkText } from '@/src/components/LinkText';
 import { ErrorBanner } from '@/src/components/ErrorBanner';
 import { validateRecoverEmailForm } from '@/src/features/auth/validators';
-import { recoverEmail, ApiError } from '@/src/features/auth/auth.api';
+import { getAuthErrorMessage, recoverEmail } from '@/src/features/auth/auth.api';
 
 export default function EmailRecoveryScreen() {
   const [phone, setPhone] = useState('');
@@ -24,7 +24,7 @@ export default function EmailRecoveryScreen() {
     setLoading(true);
     try {
       const response = await recoverEmail({ phone: phone.trim() });
-      if ('inSystem' in response && !response.inSystem) {
+      if ('inSystem' in response && response.inSystem === false) {
         setError('Not in system.');
         return;
       }
@@ -35,11 +35,7 @@ export default function EmailRecoveryScreen() {
         });
       }
     } catch (err) {
-      if (err instanceof ApiError) {
-        setError(err.message || 'Not in system.');
-      } else {
-        router.replace('/(auth)/server-error');
-      }
+      setError(getAuthErrorMessage(err));
     } finally {
       setLoading(false);
     }

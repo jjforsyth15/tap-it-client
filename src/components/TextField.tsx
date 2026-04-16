@@ -5,19 +5,34 @@ type TextFieldProps = TextInputProps & {
   label: string;
   error?: string;
   containerStyle?: ViewStyle;
+  /** When set, overrides default dark-theme label/input colors */
+  labelColor?: string;
+  inputBackgroundColor?: string;
+  inputBorderColor?: string;
+  inputTextColor?: string;
 };
 
 export function TextField({
   label,
   error,
   containerStyle,
+  labelColor,
+  inputBackgroundColor,
+  inputBorderColor,
+  inputTextColor,
   ...inputProps
 }: TextFieldProps) {
   return (
     <View style={[styles.container, containerStyle]}>
-      <Text style={styles.label}>{label}</Text>
+      <Text style={[styles.label, labelColor ? { color: labelColor } : null]}>{label}</Text>
       <TextInput
-        style={[styles.input, error ? styles.inputError : null]}
+        style={[
+          styles.input,
+          error ? styles.inputError : null,
+          inputBackgroundColor ? { backgroundColor: inputBackgroundColor } : null,
+          inputBorderColor ? { borderColor: error ? '#f87171' : inputBorderColor } : null,
+          inputTextColor ? { color: inputTextColor } : null,
+        ]}
         placeholderTextColor="#71717a"
         {...inputProps}
       />

@@ -4,7 +4,8 @@ import { PasswordField } from '@/src/components/PasswordField';
 import { PrimaryButton } from '@/src/components/PrimaryButton';
 import { Screen } from '@/src/components/Screen';
 import { TextField } from '@/src/components/TextField';
-import { ApiError } from '@/src/features/auth/auth.api';
+import { getAuthErrorMessage } from '@/src/features/auth/auth.api';
+import { setRegistrationDraft } from '@/src/features/auth/registrationDraft';
 import { validateRegisterForm } from '@/src/features/auth/validators';
 import { router } from 'expo-router';
 import React, { useState } from 'react';
@@ -38,13 +39,16 @@ export default function RegisterScreen() {
     }
     setLoading(true);
     try {
+      await setRegistrationDraft({
+        firstName: firstName.trim(),
+        lastName: lastName.trim(),
+        email: email.trim(),
+        password,
+        phone: phone.trim(),
+      });
       router.push('/(auth)/security-questions-setup');
     } catch (err) {
-      if (err instanceof ApiError) {
-        setError(err.message);
-      } else {
-        router.replace('/(auth)/server-error');
-      }
+      setError(getAuthErrorMessage(err));
     } finally {
       setLoading(false);
     }

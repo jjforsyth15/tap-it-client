@@ -8,7 +8,7 @@ import { PrimaryButton } from '@/src/components/PrimaryButton';
 import { ErrorBanner } from '@/src/components/ErrorBanner';
 import { SECURITY_QUESTIONS } from '@/src/constants/securityQuestions';
 import { validateSecurityAnswers } from '@/src/features/auth/validators';
-import { submitSecurityQuestions, ApiError } from '@/src/features/auth/auth.api';
+import { getAuthErrorMessage, submitSecurityQuestions } from '@/src/features/auth/auth.api';
 
 export default function SecurityQuestionsSetupScreen() {
   const [questionIds, setQuestionIds] = useState<(string | null)[]>([null, null, null]);
@@ -49,11 +49,7 @@ export default function SecurityQuestionsSetupScreen() {
       });
       router.replace('/(auth)/success-account-made');
     } catch (err) {
-      if (err instanceof ApiError) {
-        setError(err.message);
-      } else {
-        router.replace('/(auth)/server-error');
-      }
+      setError(getAuthErrorMessage(err));
     } finally {
       setLoading(false);
     }
