@@ -50,9 +50,11 @@ function parseParam(v: string | string[] | undefined): string {
 }
 
 type TapitHomeScreenProps = {
-  /** When set, shows a bar to return to the main dashboard (e.g. from /card-journey). */
+  /** When set, shows a bar to return to the main dashboard. */
   showExitToDashboard?: boolean;
   onExitToDashboard?: () => void;
+  /** Landing page: sign-in / sign-up actions above the story. */
+  landingAuthBar?: boolean;
 };
 
 type PageRow = { key: TapitTab };
@@ -150,7 +152,11 @@ function PagerPage({
   );
 }
 
-function TapitHomeScreenInner({ showExitToDashboard = false, onExitToDashboard }: TapitHomeScreenProps) {
+function TapitHomeScreenInner({
+  showExitToDashboard = false,
+  onExitToDashboard,
+  landingAuthBar = false,
+}: TapitHomeScreenProps) {
   const { u } = useAppPreferences();
   const T = useTapitOnboardingTheme();
   const insets = useSafeAreaInsets();
@@ -198,6 +204,36 @@ function TapitHomeScreenInner({ showExitToDashboard = false, onExitToDashboard }
           fontSize: 16,
           fontWeight: '600',
           color: T.text,
+        },
+        landingAuthRow: {
+          flexDirection: 'row',
+          alignItems: 'center',
+          justifyContent: 'flex-end',
+          gap: 10,
+          paddingHorizontal: 16,
+          paddingVertical: 10,
+          borderBottomWidth: StyleSheet.hairlineWidth,
+          borderBottomColor: T.border,
+        },
+        landingAuthBtn: {
+          paddingVertical: 8,
+          paddingHorizontal: 14,
+          borderRadius: 999,
+          borderWidth: StyleSheet.hairlineWidth,
+          borderColor: T.border,
+          backgroundColor: T.surface,
+        },
+        landingAuthBtnPrimary: {
+          backgroundColor: T.blue,
+          borderColor: T.blue,
+        },
+        landingAuthBtnText: {
+          fontSize: 14,
+          fontWeight: '700',
+          color: T.text,
+        },
+        landingAuthBtnTextPrimary: {
+          color: '#ffffff',
         },
         listWrap: {
           flex: 1,
@@ -266,7 +302,9 @@ function TapitHomeScreenInner({ showExitToDashboard = false, onExitToDashboard }
               {index === 1 ? <StoryPageServer /> : null}
               {index === 2 ? <StoryPageEmbed /> : null}
               {index === 3 ? <StoryPageShip /> : null}
-              {index === 4 ? <StoryPageTry onGoToShop={() => router.push('/shop')} /> : null}
+              {index === 4 ? (
+                <StoryPageTry onGoToShop={() => router.push('/(auth)/register')} />
+              ) : null}
             </ScrollView>
           )}
         </PagerPage>
@@ -287,6 +325,32 @@ function TapitHomeScreenInner({ showExitToDashboard = false, onExitToDashboard }
 
   return (
     <SafeAreaView style={[styles.root, { paddingTop: insets.top }]} edges={['top']}>
+      {landingAuthBar ? (
+        <View style={styles.landingAuthRow}>
+          <Pressable
+            onPress={() => router.push('/(auth)/login')}
+            style={({ pressed }) => [styles.landingAuthBtn, pressed && { opacity: 0.85 }]}
+            accessibilityRole="button"
+            accessibilityLabel={u.landing.logIn}
+          >
+            <Text style={styles.landingAuthBtnText}>{u.landing.logIn}</Text>
+          </Pressable>
+          <Pressable
+            onPress={() => router.push('/(auth)/register')}
+            style={({ pressed }) => [
+              styles.landingAuthBtn,
+              styles.landingAuthBtnPrimary,
+              pressed && { opacity: 0.9 },
+            ]}
+            accessibilityRole="button"
+            accessibilityLabel={u.landing.createAccount}
+          >
+            <Text style={[styles.landingAuthBtnText, styles.landingAuthBtnTextPrimary]}>
+              {u.landing.createAccount}
+            </Text>
+          </Pressable>
+        </View>
+      ) : null}
       {isGuest ? (
         <View style={styles.guestRibbon}>
           <Text style={styles.guestRibbonText}>{u.common.guestRibbon}</Text>
@@ -344,7 +408,7 @@ function TapitHomeScreenInner({ showExitToDashboard = false, onExitToDashboard }
 
 export function TapitHomeScreen(props: TapitHomeScreenProps) {
   const profile = useUserProfileOptional();
-  const colorMode = profile?.profile.colorMode ?? 'dark';
+  const colorMode = profile?.profile.colorMode ?? 'light';
   return (
     <TapitOnboardingThemeProvider colorMode={colorMode}>
       <TapitHomeScreenInner {...props} />

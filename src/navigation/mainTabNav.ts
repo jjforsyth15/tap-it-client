@@ -1,5 +1,5 @@
 /**
- * Bottom tab keys shared by Home, Shop, Analytics (and similar shells).
+ * Bottom tab keys shared by Home.
  * Keeps active-state detection consistent across platforms / path shapes.
  */
 import type { MainTabKey } from '@/src/i18n/ui/types';

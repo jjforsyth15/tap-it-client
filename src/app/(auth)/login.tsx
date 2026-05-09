@@ -1,13 +1,15 @@
 import { ErrorBanner } from '@/src/components/ErrorBanner';
-import { LinkText } from '@/src/components/LinkText';
 import { PasswordField } from '@/src/components/PasswordField';
 import { PrimaryButton } from '@/src/components/PrimaryButton';
 import { Screen } from '@/src/components/Screen';
 import { TextField } from '@/src/components/TextField';
-import { getAdminCredentials, validateAdminLogin } from '@/src/features/admin/adminCredentials';
-import { setAdminSession } from '@/src/features/admin/adminSession';
+import { Ionicons } from '@expo/vector-icons';
 import { useAppPreferences } from '@/src/features/appPreferences/AppPreferencesContext';
-import { getAuthErrorMessage, login } from '@/src/features/auth/auth.api';
+import { getAuthErrorMessage } from '@/src/features/auth/authErrors';
+import {
+  isDemoHardcodedLogin,
+  signInWithDemoHardcodedCredentials,
+} from '@/src/features/auth/demoHardcodedLogin';
 import { validateLoginForm } from '@/src/features/auth/validators';
 import { useUserProfile } from '@/src/features/profile/UserProfileContext';
 import { router } from 'expo-router';
@@ -19,7 +21,6 @@ import {
   ScrollView,
   StyleSheet,
   Text,
-  View,
 } from 'react-native';
 
 export default function LoginScreen() {
@@ -39,19 +40,21 @@ export default function LoginScreen() {
     }
     setLoading(true);
     try {
-      if (getAdminCredentials() && validateAdminLogin(email, password)) {
-        await setAdminSession();
-        router.replace('/admin');
+      if (isDemoHardcodedLogin(email, password)) {
+        const user = await signInWithDemoHardcodedCredentials();
+        applyAuthUser(user);
+        void refreshFromServer();
+        const displayName = user.display_name?.trim() || user.email;
+        router.replace({
+          pathname: '/home',
+          params: { displayName },
+        });
         return;
       }
-      const response = await login({ email: email.trim(), password });
-      applyAuthUser(response.user);
-      void refreshFromServer();
-      const displayName = response.user.display_name?.trim() || response.user.email;
-      router.replace({
-        pathname: '/home',
-        params: { displayName },
-      });
+      setError(
+        'No backend is configured. Use the demo account: 12345678@gmail.com / 12345678',
+      );
+      return;
     } catch (err) {
       setError(getAuthErrorMessage(err));
     } finally {
@@ -70,6 +73,15 @@ export default function LoginScreen() {
           keyboardShouldPersistTaps="handled"
           showsVerticalScrollIndicator={false}
         >
+          <Pressable
+            onPress={() => router.replace('/')}
+            style={({ pressed }) => [styles.backBtn, pressed && styles.backBtnPressed]}
+            accessibilityRole="button"
+            accessibilityLabel="Back to welcome"
+          >
+            <Ionicons name="chevron-back" size={22} color="#e4e4e7" />
+            <Text style={styles.backLabel}>Back</Text>
+          </Pressable>
           <Text style={styles.title}>{u.login.title}</Text>
           <ErrorBanner message={error} />
           <TextField
@@ -89,23 +101,6 @@ export default function LoginScreen() {
             autoComplete="password"
           />
           <PrimaryButton title={u.login.submit} onPress={handleLogin} loading={loading} />
-          <Pressable
-            onPress={() =>
-              router.replace({
-                pathname: '/home',
-                params: { guest: '1', displayName: u.common.guestDisplayName },
-              })
-            }
-            style={({ pressed }) => [styles.guestBtn, pressed && { opacity: 0.7 }]}
-            accessibilityRole="button"
-            accessibilityLabel={u.login.guestA11y}
-          >
-            <Text style={styles.guestBtnText}>{u.login.guest}</Text>
-          </Pressable>
-          <View style={styles.links}>
-            <LinkText text={u.login.forgotEmail} onPress={() => router.push('/(auth)/email-recovery')} />
-            <LinkText text={u.login.forgotPassword} onPress={() => router.push('/(auth)/password-recovery')} />
-          </View>
           <PrimaryButton
             title={u.login.register}
             onPress={() => router.push('/(auth)/register')}
@@ -120,29 +115,29 @@ export default function LoginScreen() {
 const styles = StyleSheet.create({
   flex: { flex: 1 },
   scrollContent: { paddingBottom: 24 },
+  backBtn: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 4,
+    alignSelf: 'flex-start',
+    marginBottom: 12,
+    paddingVertical: 6,
+    paddingRight: 12,
+  },
+  backBtnPressed: { opacity: 0.7 },
+  backLabel: {
+    fontSize: 16,
+    fontWeight: '600',
+    color: '#e4e4e7',
+  },
   title: {
     fontSize: 24,
     fontWeight: '700',
     color: 'white',
     marginBottom: 24,
   },
-  links: {
-    marginTop: 16,
-    gap: 12,
-  },
   secondaryButton: {
     marginTop: 24,
     backgroundColor: '#2a2a30',
-  },
-  guestBtn: {
-    marginTop: 20,
-    alignItems: 'center',
-    paddingVertical: 8,
-  },
-  guestBtnText: {
-    fontSize: 15,
-    fontWeight: '600',
-    color: '#a1a1aa',
-    textDecorationLine: 'underline',
   },
 });

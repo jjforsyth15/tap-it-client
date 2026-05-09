@@ -7,7 +7,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 type Props = {
   title: string;
-  /** Default: go back in navigation stack; use when stack history may be empty. */
+  // Default: go back in navigation stack; use when stack history may be empty. 
   onBackPress?: () => void;
 };
 

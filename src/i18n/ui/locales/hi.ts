@@ -18,7 +18,7 @@ export const UI_HI: UiStrings = {
     welcomeSub: 'खाता, विश्लेषण और आपके कार्ड — सब एक जगह।',
     journeyCtaTitle: 'आज ही अपना कार्ड बनाएँ',
     journeyCtaSub:
-      'बंडल ($10 / $17 / $20), मुफ़्त शिपिंग, उत्कीर्णन, स्टिकर, उपहार और बल्क — सब देखने के लिए टैप करें',
+      'बंडल, मुफ़्त शिपिंग, उत्कीर्णन, स्टिकर, उपहार और बल्क — सब देखने के लिए टैप करें',
     storiesTitle: 'समुदाय की कहानियाँ',
     storiesHint:
       'TapIt इस्तेमाल करने वालों के असली पल: नौकरियाँ, रिश्ते, और स्थानीय व्यवसायों के लिए और समीक्षाएँ।',
@@ -84,10 +84,7 @@ export const UI_HI: UiStrings = {
       'प्रीमियम PVC, NTAG-संगत — अपना लिंक, पोर्टफोलियो या डिजिटल कार्ड शेयर करने के लिए टैप करें। जहाँ चाहें, जितनी बार चाहें कार्ड इशारा करें; चिप आपको रोकती नहीं।',
     shipPill: 'नीचे हर बंडल पर मुफ़्त शिपिंग',
     bundlesTitle: 'बंडल',
-    bundlesHint: '1 के लिए $10, 2 के लिए $17, 3 के लिए $20 — नीचे हर स्तर पर मुफ़्त शिपिंग।',
-    tier1Sub: 'मुफ़्त शिपिंग',
-    tier2Sub: 'दो सिंगल की तुलना में बचत',
-    tier3Sub: 'प्रति कार्ड सबसे अच्छा मूल्य',
+    bundlesHint: 'जो बंडल आपके लिए सही हो, उसे चुनें — नीचे हर स्तर पर मुफ़्त शिपिंग।',
     cardSingular: 'कार्ड',
     cardPlural: 'कार्ड',
     businessBulkTitle: 'व्यवसाय और बल्क',
@@ -103,7 +100,7 @@ export const UI_HI: UiStrings = {
     emailInstead: 'इसके बजाय ईमेल',
     bulkErrEmail: 'कृपया अपना कार्य ईमेल दें ताकि हम कोट के साथ जवाब दे सकें।',
     bulkOk:
-      'धन्यवाद — हमारी टीम जल्द ही आपके बल्क ऑर्डर की कीमत के साथ संपर्क करेगी।',
+      'धन्यवाद — हमारी टीम जल्द ही आपके बल्क ऑर्डर के बारे में संपर्क करेगी।',
     shippingTitle: 'शिपिंग और मन की शांति',
     shippingHint:
       'हम सुरक्षित लिफ़ाफ़े में भेजते हैं — ट्रांज़िट में लगभग 3 कार्यदिवस।',
@@ -115,11 +112,9 @@ export const UI_HI: UiStrings = {
     addOnsTitle: 'ऐड-ऑन',
     addOnsHint: 'चेकआउट से पहले अपना बंडल अनुकूलित करने के लिए टैप करें।',
     laserEngraving: 'लेज़र उत्कीर्णन',
-    laserEngravingPrice: 'प्रति कार्ड +$10',
     laserEngravingSub:
       'नाम, लोगो या छोटी पंक्ति — आपके बंडल के हर कार्ड पर लेज़र से।',
     customStickers: 'कस्टम स्टिकर',
-    stickersPrice: 'प्रति स्टिकर $1',
     stickersSub: 'अपने ब्रांड या इवेंट से मिलाएँ — चिपकाने वाले एक्सेंट।',
     fewerStickersA11y: 'कम स्टिकर',
     moreStickersA11y: 'ज़्यादा स्टिकर',
@@ -132,17 +127,16 @@ export const UI_HI: UiStrings = {
     orderEngraving: 'लेज़र उत्कीर्णन ×',
     orderStickers: 'कस्टम स्टिकर ×',
     orderGiftWrap: 'गिफ़्ट रैप और नोट',
-    estimatedTotal: 'अनुमानित कुल',
     freeShippingIncluded: 'मुफ़्त शिपिंग शामिल',
     checkoutCta: 'चेकआउट पर जारी रखें',
     checkoutA11y: 'चेकआउट पर जारी रखें',
     orderQueued:
-      'ऑर्डर कतार में ({{qty}} {{cards}}, ${{total}})। पूर्ति के बाद आपके खाते में रिकॉर्ड बनने पर कार्ड यहाँ दिखेंगे।',
+      'ऑर्डर कतार में ({{qty}} {{cards}})। पूर्ति के बाद आपके खाते में रिकॉर्ड बनने पर कार्ड यहाँ दिखेंगे।',
     giftCardsTitle: 'गिफ़्ट कार्ड',
-    giftCardsHint: '$10 से $100 तक राशि चुनें — कार्ड और ऐड-ऑन के लिए रिडीम करें।',
-    buyGiftCard: '${{amount}} गिफ़्ट कार्ड खरीदें',
+    giftCardsHint: 'गिफ़्ट कार्ड चुनें — कार्ड और ऐड-ऑन के लिए रिडीम करें।',
+    buyGiftCard: 'गिफ़्ट कार्ड खरीदें',
     giftCardNote:
-      '${{amount}} गिफ़्ट कार्ड चुना गया — इस बिल्ड में भुगतान चरण केवल UI है।',
+      'गिफ़्ट कार्ड चुना गया — इस बिल्ड में भुगतान चरण केवल UI है।',
     reviewsTitle: 'ग्राहक समीक्षाएँ',
     reviewsHint: 'नकली ग्राहकों से पाँच सितारा — केवल डेमो उद्धरण।',
     bulkEmailSubject: 'बल्क NFC कार्ड अनुमान',
@@ -369,6 +363,22 @@ export const UI_HI: UiStrings = {
     storyTrySuccessTitle: 'लिंक खुला',
     storyTrySuccessBody:
       'असल में आपका फ़ोन सीधे आपके सेट किए गए गंतव्य पर जाएगा — समीक्षा, साइट या प्रोफ़ाइल।',
+    storyLandingSectionsTitle: 'Five ways your NFC card can help on campus',
+    landingS1Title: 'LinkedIn profile & social URLs',
+    landingS1Body:
+      'Put your LinkedIn URL on the NFC card. When you tap it on someone’s phone, they open your LinkedIn link — no typing. Do the same for other platforms: Discord, Instagram, X, Snapchat, and more — one tap opens the link you chose.',
+    landingS2Title: 'Phone number',
+    landingS2Body:
+      'Save your number as a tap-to-call or tap-to-save link. When someone taps your card instead of manually entering digits, sharing your phone is easier and faster.',
+    landingS3Title: 'Student clubs',
+    landingS3Body:
+      'Student clubs could use NFC cards at tables to share sign-up forms, GroupMe/Discord links, Instagram pages, event calendars, and membership applications.',
+    landingS4Title: 'Resume & portfolio',
+    landingS4Body:
+      'Instead of saying “I’ll email it to you,” a student could tap the card and open a page with their resume, projects, certifications, and work samples. This is useful for CS, design, business, engineering, film, and art students.',
+    landingS5Title: 'Campus events',
+    landingS5Body:
+      'An NFC card or tag could link to event registration, directions, check-in forms, or schedules. It makes tabling and event promotion easier.',
     examplesSectionHead: 'आपका कार्ड क्या खोल सकता है — असली उदाहरण',
     exMapsKicker: 'मैप और समीक्षाएँ',
     exMapsTitle: 'Apple Store Northridge',

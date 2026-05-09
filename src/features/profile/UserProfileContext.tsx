@@ -1,8 +1,5 @@
-import { fetchAccountMe, patchAccount } from '@/src/features/account/account.api';
-import { mergeAuthUserIntoProfile, mergeServerAccount, profileStateToAccountPatch } from '@/src/features/account/accountProfileMap';
-import { fetchMyCardsAsUserNfcCards } from '@/src/features/cards/cards.api';
+import { mergeAuthUserIntoProfile } from '@/src/features/account/accountProfileMap';
 import type { AuthUser } from '@/src/features/auth/types';
-import { getAccessToken } from '@/src/features/auth/session';
 import React, {
   createContext,
   useCallback,
@@ -22,8 +19,6 @@ import {
 } from '@/src/features/profile/profileTypes';
 import { clearUserProfile, loadUserProfile, saveUserProfile } from '@/src/features/profile/profileStorage';
 
-const SYNC_DEBOUNCE_MS = 650;
-
 type UserProfileContextValue = {
   hydrated: boolean;
   profile: UserProfileState;
@@ -36,9 +31,7 @@ type UserProfileContextValue = {
   setAccentHex: (hex: string) => void;
   resetProfileStorage: () => Promise<void>;
   refreshMyCards: () => Promise<void>;
-  /** Load account from API when signed in (e.g. after login). */
   refreshFromServer: () => Promise<void>;
-  /** After login/register: apply JWT user payload immediately (avoids waiting on GET /account/me). */
   applyAuthUser: (user: AuthUser) => void;
 };
 
@@ -48,29 +41,11 @@ export function UserProfileProvider({ children }: { children: React.ReactNode })
   const [hydrated, setHydrated] = useState(false);
   const [profile, setProfileState] = useState<UserProfileState>(() => defaultUserProfile());
   const [myCards, setMyCards] = useState<UserNfcCard[]>([]);
-  const [cardsLoading, setCardsLoading] = useState(false);
+  const cardsLoading = false;
   const latestStateRef = useRef<UserProfileState>(defaultUserProfile());
-  const syncTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const persist = useCallback(async (next: UserProfileState) => {
     await saveUserProfile(next);
-  }, []);
-
-  const scheduleServerSync = useCallback(() => {
-    if (syncTimerRef.current) clearTimeout(syncTimerRef.current);
-    syncTimerRef.current = setTimeout(() => {
-      syncTimerRef.current = null;
-      void (async () => {
-        const token = await getAccessToken();
-        if (!token) return;
-        const s = latestStateRef.current;
-        try {
-          await patchAccount(profileStateToAccountPatch(s));
-        } catch {
-          // offline or validation — local cache still applies
-        }
-      })();
-    }, SYNC_DEBOUNCE_MS);
   }, []);
 
   const setProfile = useCallback(
@@ -79,11 +54,10 @@ export function UserProfileProvider({ children }: { children: React.ReactNode })
         const next = { ...prev, ...patch };
         latestStateRef.current = next;
         void persist(next);
-        scheduleServerSync();
         return next;
       });
     },
-    [persist, scheduleServerSync],
+    [persist],
   );
 
   const replaceProfile = useCallback(
@@ -118,36 +92,10 @@ export function UserProfileProvider({ children }: { children: React.ReactNode })
   }, []);
 
   const refreshMyCards = useCallback(async () => {
-    const token = await getAccessToken();
-    if (!token) {
-      setMyCards([]);
-      return;
-    }
-    setCardsLoading(true);
-    try {
-      const list = await fetchMyCardsAsUserNfcCards();
-      setMyCards(list);
-    } catch {
-      setMyCards([]);
-    } finally {
-      setCardsLoading(false);
-    }
+    setMyCards([]);
   }, []);
 
   const refreshFromServer = useCallback(async () => {
-    const token = await getAccessToken();
-    if (!token) return;
-    try {
-      const me = await fetchAccountMe();
-      setProfileState((prev) => {
-        const next = mergeServerAccount(prev, me);
-        latestStateRef.current = next;
-        void saveUserProfile(next);
-        return next;
-      });
-    } catch {
-      // keep local profile
-    }
     await refreshMyCards();
   }, [refreshMyCards]);
 
@@ -162,37 +110,11 @@ export function UserProfileProvider({ children }: { children: React.ReactNode })
 
   useEffect(() => {
     let cancelled = false;
-    (async () => {
+    void (async () => {
       const local = await loadUserProfile();
       if (!cancelled) {
         latestStateRef.current = local;
         setProfileState(local);
-      }
-      const token = await getAccessToken();
-      if (!token) {
-        if (!cancelled) setHydrated(true);
-        return;
-      }
-      try {
-        const me = await fetchAccountMe();
-        if (cancelled) return;
-        setProfileState((prev) => {
-          const next = mergeServerAccount(prev, me);
-          latestStateRef.current = next;
-          void saveUserProfile(next);
-          return next;
-        });
-      } catch {
-        // signed in but API unreachable — keep AsyncStorage profile
-      }
-      if (!cancelled) setCardsLoading(true);
-      try {
-        const list = await fetchMyCardsAsUserNfcCards();
-        if (!cancelled) setMyCards(list);
-      } catch {
-        if (!cancelled) setMyCards([]);
-      } finally {
-        if (!cancelled) setCardsLoading(false);
       }
       if (!cancelled) setHydrated(true);
     })();

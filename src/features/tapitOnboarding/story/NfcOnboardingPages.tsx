@@ -68,7 +68,7 @@ export function StoryPageServer() {
         <Ionicons name="arrow-forward" size={18} color={T.muted} />
         <View style={styles.dash} />
         <View style={[styles.flowServer, { borderColor: T.blue, backgroundColor: `${T.blue}18` }]}>
-          <Ionicons name="cloud-done-outline" size={26} color={T.blue} />
+          <Ionicons name="phone-portrait-outline" size={26} color={T.blue} />
           <Text style={[styles.flowMini, { color: T.blue }]}>{o.storyServerCloud}</Text>
         </View>
       </View>
@@ -118,7 +118,7 @@ export function StoryPageEmbed() {
         <View style={styles.heroEmbedForeground}>
           <NfcCardHero pageIndex={2} />
           <View style={[styles.checkBadge, { backgroundColor: T.greenBg, borderColor: T.green }]}>
-            <Ionicons name="checkmark-circle" size={22} color={T.green} />
+            <Ionicons name="people-outline" size={22} color={T.green} />
           </View>
         </View>
       </View>
@@ -160,9 +160,9 @@ export function StoryPageShip() {
           <Image source={NFC_CARD_IMAGE} style={styles.miniCardImg} contentFit="contain" />
         </Animated.View>
         <Ionicons name="arrow-down" size={20} color={T.muted} style={{ marginVertical: 6 }} />
-        <View style={[styles.envelope, { borderColor: T.border, backgroundColor: T.surface }]}>
-          <Ionicons name="mail-outline" size={32} color={T.muted} />
-          <Text style={[styles.envelopeLabel, { color: T.muted }]}>{o.storyShipEnvelope}</Text>
+        <View style={[styles.resumePanel, { borderColor: T.border, backgroundColor: T.surface }]}>
+          <Ionicons name="document-text-outline" size={34} color={T.blue} />
+          <Text style={[styles.envelopeLabel, { color: T.muted, marginTop: 10 }]}>{o.storyShipEnvelope}</Text>
         </View>
       </View>
       <BodyLine delay={160}>{o.storyShipBody1}</BodyLine>
@@ -356,14 +356,14 @@ const styles = StyleSheet.create({
     width: '100%',
     aspectRatio: 1.586,
   },
-  envelope: {
+  resumePanel: {
     width: 200,
-    paddingVertical: 22,
+    paddingVertical: 20,
     paddingHorizontal: 16,
     borderRadius: 12,
     borderWidth: StyleSheet.hairlineWidth,
     alignItems: 'center',
-    gap: 6,
+    gap: 4,
   },
   envelopeLabel: {
     fontSize: 12,

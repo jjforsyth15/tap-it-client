@@ -1,17 +1,27 @@
 import { ErrorBanner } from '@/src/components/ErrorBanner';
+import { Ionicons } from '@expo/vector-icons';
 import { LinkText } from '@/src/components/LinkText';
 import { PasswordField } from '@/src/components/PasswordField';
 import { PrimaryButton } from '@/src/components/PrimaryButton';
 import { Screen } from '@/src/components/Screen';
 import { TextField } from '@/src/components/TextField';
-import { getAuthErrorMessage } from '@/src/features/auth/auth.api';
-import { setRegistrationDraft } from '@/src/features/auth/registrationDraft';
+import { getAuthErrorMessage } from '@/src/features/auth/authErrors';
+import { registerAccountLocal } from '@/src/features/auth/localRegister';
 import { validateRegisterForm } from '@/src/features/auth/validators';
+import { useUserProfile } from '@/src/features/profile/UserProfileContext';
 import { router } from 'expo-router';
 import React, { useState } from 'react';
-import { KeyboardAvoidingView, Platform, ScrollView } from 'react-native';
+import {
+  KeyboardAvoidingView,
+  Platform,
+  Pressable,
+  ScrollView,
+  StyleSheet,
+  Text,
+} from 'react-native';
 
 export default function RegisterScreen() {
+  const { applyAuthUser, refreshFromServer } = useUserProfile();
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
@@ -39,14 +49,20 @@ export default function RegisterScreen() {
     }
     setLoading(true);
     try {
-      await setRegistrationDraft({
+      const response = await registerAccountLocal({
         firstName: firstName.trim(),
         lastName: lastName.trim(),
         email: email.trim(),
         password,
         phone: phone.trim(),
       });
-      router.push('/(auth)/security-questions-setup');
+      applyAuthUser(response.user);
+      void refreshFromServer();
+      const displayName = response.user.display_name?.trim() || response.user.email;
+      router.replace({
+        pathname: '/home',
+        params: { displayName },
+      });
     } catch (err) {
       setError(getAuthErrorMessage(err));
     } finally {
@@ -61,10 +77,19 @@ export default function RegisterScreen() {
         behavior={Platform.OS === 'ios' ? 'padding' : undefined}
       >
         <ScrollView
-          contentContainerStyle={{ paddingBottom: 24 }}
+          contentContainerStyle={styles.scrollContent}
           keyboardShouldPersistTaps="handled"
           showsVerticalScrollIndicator={false}
         >
+          <Pressable
+            onPress={() => router.replace('/')}
+            style={({ pressed }) => [styles.backBtn, pressed && styles.backBtnPressed]}
+            accessibilityRole="button"
+            accessibilityLabel="Back to welcome"
+          >
+            <Ionicons name="chevron-back" size={22} color="#e4e4e7" />
+            <Text style={styles.backLabel}>Back</Text>
+          </Pressable>
           <TextField
             label="First name"
             value={firstName}
@@ -118,10 +143,29 @@ export default function RegisterScreen() {
             keyboardType="phone-pad"
           />
           <ErrorBanner message={error} />
-          <PrimaryButton title="Continue" onPress={handleContinue} loading={loading} />
+          <PrimaryButton title="Create account" onPress={handleContinue} loading={loading} />
           <LinkText text="Back to log in" onPress={() => router.back()} />
         </ScrollView>
       </KeyboardAvoidingView>
     </Screen>
   );
 }
+
+const styles = StyleSheet.create({
+  scrollContent: { paddingBottom: 24 },
+  backBtn: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 4,
+    alignSelf: 'flex-start',
+    marginBottom: 12,
+    paddingVertical: 6,
+    paddingRight: 12,
+  },
+  backBtnPressed: { opacity: 0.7 },
+  backLabel: {
+    fontSize: 16,
+    fontWeight: '600',
+    color: '#e4e4e7',
+  },
+});

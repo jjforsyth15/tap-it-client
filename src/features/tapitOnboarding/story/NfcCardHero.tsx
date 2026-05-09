@@ -13,7 +13,7 @@ import Animated, {
 import { useOnboardingPager } from '../OnboardingPagerContext';
 import { useTapitOnboardingTheme } from '../TapitOnboardingThemeContext';
 
-/** Bundled asset: `tap-it-client/photos/001NFC.png` (four levels up from `story/` → project root, then `photos/`) */
+/** Bundled asset: project root `photos/001NFC.png` */
 export const NFC_CARD_IMAGE = require('../../../../photos/001NFC.png');
 
 /** ISO-style card ratio; image uses `contain` so the full card stays visible without cropping. */

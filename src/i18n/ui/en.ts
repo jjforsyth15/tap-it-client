@@ -3,7 +3,7 @@ import type { UiStrings } from '@/src/i18n/ui/types';
 export const UI_EN: UiStrings = {
   common: {
     guestRibbon: 'Browsing without an account',
-    accountDisabledRibbon: 'Account disabled — re-enable in Settings → Account.',
+    accountDisabledRibbon: 'Account disabled  re-enable in Settings → Account.',
     guestDisplayName: 'Guest',
   },
   nav: {
@@ -15,10 +15,10 @@ export const UI_EN: UiStrings = {
   },
   home: {
     welcomeBack: 'Welcome back,',
-    welcomeSub: 'Account, analytics, and your cards — in one place.',
+    welcomeSub: 'Account, analytics, and your cards  in one place.',
     journeyCtaTitle: 'Create your card today',
     journeyCtaSub:
-      'Shop bundles ($10 / $17 / $20), free shipping, engraving, stickers, gifts & bulk — tap to see everything',
+      ' free shipping, engraving, stickers, gifts & bulk — tap to see everything',
     storiesTitle: 'Stories from the community',
     storiesHint:
       'Real moments from people using TapIt: jobs, relationships, and more reviews for local businesses.',
@@ -317,39 +317,57 @@ export const UI_EN: UiStrings = {
     navTabEmbed: 'embed',
     navTabShip: 'ship',
     navTabTry: 'try',
-    storyChooseCallout: 'Choose your link',
-    storyChooseHeaderSub: 'your destination, your rules',
+    storyChooseCallout: 'LinkedIn & profile links',
+    storyChooseHeaderSub: 'Your URL lives on the card',
     storyChooseBody1:
-      'Pick what opens when someone taps your card — you can point to any page or URL you choose.',
+      'Put your LinkedIn URL on the NFC card. When you tap it on someone’s phone, they open your LinkedIn instantly  no typing or searching.',
     storyChooseBody2:
-      'You stay in control: change the link later anytime by reaching out to us.',
-    storyServerCallout: 'Link goes to our server',
-    storyServerHeaderSub: 'secure handoff',
-    storyServerYourPick: 'your pick',
-    storyServerCloud: 'Tapit cloud',
+      'Do the same with other platforms — Discord, Instagram, X, Snapchat, and more — one tap opens the link you chose.',
+    storyServerCallout: 'Phone number',
+    storyServerHeaderSub: 'tap to share - faster than typing',
+    storyServerYourPick: 'your card',
+    storyServerCloud: 'their phone',
     storyServerBody1:
-      'When you order, the destination you chose is sent securely to our systems so we can program your card.',
-    storyServerBody2: 'Nothing hits the chip until we have verified your link end-to-end.',
-    storyEmbedCallout: 'We verify and embed it into your card',
-    storyEmbedHeaderSub: 'encoded & checked',
+      'Store your number as a tap-to-call or tap-to-save link. When someone taps your card, they connect without manually entering digits - easier at career fairs, mixers, and meetings.',
+    storyServerBody2:
+      'Skip spelling out every digit and avoid typos when you exchange contact info in a hurry.',
+    storyEmbedCallout: 'Student clubs',
+    storyEmbedHeaderSub: 'sign-ups & community links',
     storyEmbedBody1:
-      'Our encoder writes your URL into the NFC chip and runs a live tap test before the card ships.',
+      'Clubs can use NFC cards at tables to share sign-up forms, GroupMe or Discord links, Instagram pages, event calendars, and membership applications.',
     storyEmbedBody2:
-      'Think of it as a premium key: the link is fused to the card, not a sticker on the surface.',
-    storyShipCallout: 'We pack and ship it in an envelope',
-    storyShipHeaderSub: 'on the way to you',
-    storyShipEnvelope: 'tracked envelope',
+      'Update the link anytime so recruiting stays fresh each semester.',
+    storyShipCallout: 'Resume & portfolio',
+    storyShipHeaderSub: 'show your work in one tap',
+    storyShipEnvelope: 'resume & projects',
     storyShipBody1:
-      'Your cards leave in protective packaging — most U.S. orders arrive within a few business days.',
-    storyTryCallout: 'Try me out',
-    storyTryHeaderSub: 'tap. connect. done.',
-    storyTryNfcReady: 'NFC ready',
-    storyTryBody: 'Tap the card to your phone — like Apple Pay, but for your link.',
+      'Instead of "I will email it to you," tap the card to open a page with your resume, projects, certifications, and work samples - ideal for CS, design, business, engineering, film, and art students.',
+    storyTryCallout: 'Campus events',
+    storyTryHeaderSub: 'registration · directions · schedules',
+    storyTryNfcReady: 'Event tap',
+    storyTryBody:
+      'An NFC card or tag can link to event registration, directions, check-in forms, or schedules - simpler tabling and promotion at fairs and campus events.',
     storyTryBtn: 'Try!',
     storyTryBtnA11y: 'Try NFC tap demo',
     storyTrySuccessTitle: 'Link opened',
     storyTrySuccessBody:
-      'In real life, your phone would jump straight to the destination you set — reviews, site, or profile.',
+      'In real life a tap could open RSVP, a map, parking, or a waiver - whatever URL you put on the card.',
+    storyLandingSectionsTitle: 'Five ways your NFC card can help on campus',
+    landingS1Title: 'LinkedIn profile & social URLs',
+    landingS1Body:
+      'Put your LinkedIn URL on the NFC card. When you tap it on someone’s phone, they open your LinkedIn link - no typing. Do the same for other platforms: Discord, Instagram, X, Snapchat, and more - one tap opens the link you chose.',
+    landingS2Title: 'Phone number',
+    landingS2Body:
+      'Save your number as a tap-to-call or tap-to-save link. When someone taps your card instead of manually entering digits, sharing your phone is easier and faster.',
+    landingS3Title: 'Student clubs',
+    landingS3Body:
+      'Student clubs could use NFC cards at tables to share sign-up forms, GroupMe/Discord links, Instagram pages, event calendars, and membership applications.',
+    landingS4Title: 'Resume & portfolio',
+    landingS4Body:
+      'Instead of saying "I will email it to you," a student could tap the card and open a page with their resume, projects, certifications, and work samples. This is useful for CS, design, business, engineering, film, and art students.',
+    landingS5Title: 'Campus events',
+    landingS5Body:
+      'An NFC card or tag could link to event registration, directions, check-in forms, or schedules. It makes tabling and event promotion easier.',
     examplesSectionHead: 'What your card can open — real examples',
     exMapsKicker: 'Maps & reviews',
     exMapsTitle: 'Apple Store Northridge',

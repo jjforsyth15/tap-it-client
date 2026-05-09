@@ -69,9 +69,6 @@ export type UiStrings = {
     shipPill: string;
     bundlesTitle: string;
     bundlesHint: string;
-    tier1Sub: string;
-    tier2Sub: string;
-    tier3Sub: string;
     cardSingular: string;
     cardPlural: string;
     businessBulkTitle: string;
@@ -94,10 +91,8 @@ export type UiStrings = {
     addOnsTitle: string;
     addOnsHint: string;
     laserEngraving: string;
-    laserEngravingPrice: string;
     laserEngravingSub: string;
     customStickers: string;
-    stickersPrice: string;
     stickersSub: string;
     fewerStickersA11y: string;
     moreStickersA11y: string;
@@ -109,7 +104,6 @@ export type UiStrings = {
     orderEngraving: string;
     orderStickers: string;
     orderGiftWrap: string;
-    estimatedTotal: string;
     freeShippingIncluded: string;
     checkoutCta: string;
     checkoutA11y: string;
@@ -310,6 +304,18 @@ export type UiStrings = {
     storyTryBtnA11y: string;
     storyTrySuccessTitle: string;
     storyTrySuccessBody: string;
+    /** Heading above the five stacked cards on landing step 1 */
+    storyLandingSectionsTitle: string;
+    landingS1Title: string;
+    landingS1Body: string;
+    landingS2Title: string;
+    landingS2Body: string;
+    landingS3Title: string;
+    landingS3Body: string;
+    landingS4Title: string;
+    landingS4Body: string;
+    landingS5Title: string;
+    landingS5Body: string;
     examplesSectionHead: string;
     exMapsKicker: string;
     exMapsTitle: string;

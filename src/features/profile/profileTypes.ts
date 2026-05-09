@@ -106,7 +106,7 @@ export function defaultUserProfile(): UserProfileState {
     socialLinkedin: '',
     memberSinceIso: now,
     accentHex: DEFAULT_ACCENT,
-    colorMode: 'dark',
+    colorMode: 'light',
     securityQ1Id: null,
     securityQ2Id: null,
     securityQ3Id: null,

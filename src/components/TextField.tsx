@@ -1,11 +1,11 @@
 import React from 'react';
-import { View, Text, TextInput, StyleSheet, TextInputProps, ViewStyle } from 'react-native';
+import { StyleSheet, Text, TextInput, TextInputProps, View, ViewStyle } from 'react-native';
 
 type TextFieldProps = TextInputProps & {
   label: string;
   error?: string;
   containerStyle?: ViewStyle;
-  /** When set, overrides default dark-theme label/input colors */
+  
   labelColor?: string;
   inputBackgroundColor?: string;
   inputBorderColor?: string;

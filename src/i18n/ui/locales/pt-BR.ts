@@ -18,7 +18,7 @@ export const UI_PT_BR: UiStrings = {
     welcomeSub: 'Conta, análises e seus cartões — tudo em um só lugar.',
     journeyCtaTitle: 'Crie seu cartão hoje',
     journeyCtaSub:
-      'Pacotes na loja ($10 / $17 / $20), frete grátis, gravação, adesivos, presentes e volume — toque para ver tudo',
+      'Pacotes na loja, frete grátis, gravação, adesivos, presentes e volume — toque para ver tudo',
     storiesTitle: 'Histórias da comunidade',
     storiesHint:
       'Momentos reais de quem usa o TapIt: empregos, relacionamentos e mais avaliações para negócios locais.',
@@ -83,10 +83,7 @@ export const UI_PT_BR: UiStrings = {
       'PVC premium, compatível com NTAG — toque para compartilhar seu link, portfólio ou cartão digital. Aponte o cartão onde quiser, quantas vezes quiser; o chip não limita você.',
     shipPill: 'Frete grátis em todos os pacotes abaixo',
     bundlesTitle: 'Pacotes',
-    bundlesHint: '1 por $10, 2 por $17, 3 por $20 — frete grátis em todos os níveis abaixo.',
-    tier1Sub: 'Frete grátis',
-    tier2Sub: 'Economia em relação a dois avulsos',
-    tier3Sub: 'Melhor custo por cartão',
+    bundlesHint: 'Escolha o pacote que combina com você — frete grátis em todos os níveis abaixo.',
     cardSingular: 'cartão',
     cardPlural: 'cartões',
     businessBulkTitle: 'Empresas e volume',
@@ -102,7 +99,7 @@ export const UI_PT_BR: UiStrings = {
     emailInstead: 'Enviar e-mail',
     bulkErrEmail: 'Informe seu e-mail corporativo para podermos responder com o orçamento.',
     bulkOk:
-      'Obrigado — nossa equipe entrará em contato em breve com valores para seu pedido em volume.',
+      'Obrigado — nossa equipe entrará em contato em breve sobre seu pedido em volume.',
     shippingTitle: 'Envio e tranquilidade',
     shippingHint:
       'Enviamos em envelope seguro — espere cerca de 3 dias úteis em trânsito.',
@@ -114,10 +111,8 @@ export const UI_PT_BR: UiStrings = {
     addOnsTitle: 'Complementos',
     addOnsHint: 'Toque para personalizar seu pacote antes do checkout.',
     laserEngraving: 'Gravação a laser',
-    laserEngravingPrice: '+$10 por cartão',
     laserEngravingSub: 'Nome, logotipo ou uma linha curta — gravada a laser em cada cartão do pacote.',
     customStickers: 'Adesivos personalizados',
-    stickersPrice: '$1 cada',
     stickersSub: 'Combine com sua marca ou evento — detalhes que colam na hora.',
     fewerStickersA11y: 'Menos adesivos',
     moreStickersA11y: 'Mais adesivos',
@@ -130,17 +125,16 @@ export const UI_PT_BR: UiStrings = {
     orderEngraving: 'Gravação a laser ×',
     orderStickers: 'Adesivos personalizados ×',
     orderGiftWrap: 'Embalagem para presente e bilhete',
-    estimatedTotal: 'Total estimado',
     freeShippingIncluded: 'Frete grátis incluído',
     checkoutCta: 'Continuar para o checkout',
     checkoutA11y: 'Continuar para o checkout',
     orderQueued:
-      'Pedido na fila ({{qty}} {{cards}}, ${{total}}). Os cartões aparecem aqui depois que o envio criar registros na sua conta.',
+      'Pedido na fila ({{qty}} {{cards}}). Os cartões aparecem aqui depois que o envio criar registros na sua conta.',
     giftCardsTitle: 'Vales-presente',
-    giftCardsHint: 'Escolha um valor de $10 a $100 — use em cartões e complementos.',
-    buyGiftCard: 'Comprar vale de ${{amount}}',
+    giftCardsHint: 'Escolha um vale-presente — use em cartões e complementos.',
+    buyGiftCard: 'Comprar vale-presente',
     giftCardNote:
-      'Vale de ${{amount}} selecionado — etapa de pagamento é só interface nesta versão.',
+      'Vale-presente selecionado — etapa de pagamento é só interface nesta versão.',
     reviewsTitle: 'Avaliações de clientes',
     reviewsHint: 'Cinco estrelas de clientes fictícios — citações só para demonstração.',
     bulkEmailSubject: 'Orçamento de cartões NFC em volume',
@@ -365,6 +359,22 @@ export const UI_PT_BR: UiStrings = {
     storyTrySuccessTitle: 'Link aberto',
     storyTrySuccessBody:
       'Na vida real, o celular iria direto ao destino que você definiu — avaliações, site ou perfil.',
+    storyLandingSectionsTitle: 'Five ways your NFC card can help on campus',
+    landingS1Title: 'LinkedIn profile & social URLs',
+    landingS1Body:
+      'Put your LinkedIn URL on the NFC card. When you tap it on someone’s phone, they open your LinkedIn link — no typing. Do the same for other platforms: Discord, Instagram, X, Snapchat, and more — one tap opens the link you chose.',
+    landingS2Title: 'Phone number',
+    landingS2Body:
+      'Save your number as a tap-to-call or tap-to-save link. When someone taps your card instead of manually entering digits, sharing your phone is easier and faster.',
+    landingS3Title: 'Student clubs',
+    landingS3Body:
+      'Student clubs could use NFC cards at tables to share sign-up forms, GroupMe/Discord links, Instagram pages, event calendars, and membership applications.',
+    landingS4Title: 'Resume & portfolio',
+    landingS4Body:
+      'Instead of saying “I’ll email it to you,” a student could tap the card and open a page with their resume, projects, certifications, and work samples. This is useful for CS, design, business, engineering, film, and art students.',
+    landingS5Title: 'Campus events',
+    landingS5Body:
+      'An NFC card or tag could link to event registration, directions, check-in forms, or schedules. It makes tabling and event promotion easier.',
     examplesSectionHead: 'O que seu cartão pode abrir — exemplos reais',
     exMapsKicker: 'Mapas e avaliações',
     exMapsTitle: 'Apple Store Northridge',

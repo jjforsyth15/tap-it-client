@@ -1,8 +1,6 @@
 import { PrimaryButton } from '@/src/components/PrimaryButton';
 import { PasswordField } from '@/src/components/PasswordField';
 import { SettingsSubpageHeader } from '@/src/components/SettingsSubpageHeader';
-import { changeAccountPassword } from '@/src/features/account/account.api';
-import { getAuthErrorMessage } from '@/src/features/auth/auth.api';
 import { useUserProfile } from '@/src/features/profile/UserProfileContext';
 import { router } from 'expo-router';
 import React, { useState } from 'react';
@@ -34,10 +32,11 @@ export default function UpdatePasswordScreen() {
     }
     setLoading(true);
     try {
-      await changeAccountPassword(current, next);
-      Alert.alert('Password updated', 'Your password has been saved.', [{ text: 'OK', onPress: () => router.back() }]);
-    } catch (e) {
-      setError(getAuthErrorMessage(e));
+      Alert.alert(
+        'No server',
+        'This build does not connect to a backend, so your password is not saved remotely.',
+        [{ text: 'OK', onPress: () => router.back() }],
+      );
     } finally {
       setLoading(false);
     }

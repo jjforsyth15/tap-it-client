@@ -18,7 +18,7 @@ export const UI_DE: UiStrings = {
     welcomeSub: 'Konto, Auswertungen und deine Karten — alles an einem Ort.',
     journeyCtaTitle: 'Erstelle heute deine Karte',
     journeyCtaSub:
-      'Shop-Bundles (10 $ / 17 $ / 20 $), kostenloser Versand, Gravur, Sticker, Geschenke & Mengen — tippe, um alles zu sehen',
+      'Shop-Bundles, kostenloser Versand, Gravur, Sticker, Geschenke & Mengen — tippe, um alles zu sehen',
     storiesTitle: 'Geschichten aus der Community',
     storiesHint:
       'Echte Momente von TapIt-Nutzern: Jobs, Beziehungen und mehr Bewertungen für lokale Unternehmen.',
@@ -86,10 +86,7 @@ export const UI_DE: UiStrings = {
     shipPill: 'Kostenloser Versand bei jedem Bundle unten',
     bundlesTitle: 'Bundles',
     bundlesHint:
-      '1 für 10 $, 2 für 17 $, 3 für 20 $ — kostenloser Versand bei jeder Stufe unten.',
-    tier1Sub: 'Kostenloser Versand',
-    tier2Sub: 'Ersparnis gegenüber zwei Einzelkarten',
-    tier3Sub: 'Bester Preis pro Karte',
+      'Wähle die Bundle-Größe, die zu dir passt — kostenloser Versand bei jeder Stufe unten.',
     cardSingular: 'Karte',
     cardPlural: 'Karten',
     businessBulkTitle: 'Business & Mengen',
@@ -106,7 +103,7 @@ export const UI_DE: UiStrings = {
     bulkErrEmail:
       'Bitte gib deine Geschäfts-E-Mail ein, damit wir dir ein Angebot schicken können.',
     bulkOk:
-      'Danke — unser Team meldet sich in Kürze mit Preisen für deine Mengenbestellung.',
+      'Danke — unser Team meldet sich in Kürze zu deiner Mengenbestellung.',
     shippingTitle: 'Versand & gutes Gefühl',
     shippingHint:
       'Wir versenden in einem sicheren Umschlag — rechne mit etwa 3 Werktagen unterwegs.',
@@ -118,11 +115,9 @@ export const UI_DE: UiStrings = {
     addOnsTitle: 'Add-ons',
     addOnsHint: 'Tippe, um dein Bundle vor dem Checkout anzupassen.',
     laserEngraving: 'Lasergravur',
-    laserEngravingPrice: '+10 $ pro Karte',
     laserEngravingSub:
       'Name, Logo oder eine kurze Zeile — auf jede Karte in deinem Bundle gelasert.',
     customStickers: 'Individuelle Sticker',
-    stickersPrice: '1 $ pro Stück',
     stickersSub: 'Passend zu Marke oder Event — zum Aufkleben.',
     fewerStickersA11y: 'Weniger Sticker',
     moreStickersA11y: 'Mehr Sticker',
@@ -135,18 +130,17 @@ export const UI_DE: UiStrings = {
     orderEngraving: 'Lasergravur ×',
     orderStickers: 'Individuelle Sticker ×',
     orderGiftWrap: 'Geschenkverpackung & Karte',
-    estimatedTotal: 'Geschätzte Summe',
     freeShippingIncluded: 'Kostenloser Versand inklusive',
     checkoutCta: 'Weiter zur Kasse',
     checkoutA11y: 'Weiter zur Kasse',
     orderQueued:
-      'Bestellung eingereiht ({{qty}} {{cards}}, ${{total}}). Die Karten erscheinen hier, sobald die Fulfillment-Einträge in deinem Konto angelegt sind.',
+      'Bestellung eingereiht ({{qty}} {{cards}}). Die Karten erscheinen hier, sobald die Fulfillment-Einträge in deinem Konto angelegt sind.',
     giftCardsTitle: 'Geschenkkarten',
     giftCardsHint:
-      'Wähle einen Betrag von 10 $ bis 100 $ — einlösbar für Karten und Add-ons.',
-    buyGiftCard: 'Geschenkkarte über ${{amount}} kaufen',
+      'Wähle eine Geschenkkarte — einlösbar für Karten und Add-ons.',
+    buyGiftCard: 'Geschenkkarte kaufen',
     giftCardNote:
-      '${{amount}} Geschenkkarte ausgewählt — Zahlungsschritt in diesem Build nur UI.',
+      'Geschenkkarte ausgewählt — Zahlungsschritt in diesem Build nur UI.',
     reviewsTitle: 'Kundenbewertungen',
     reviewsHint: 'Fünf-Sterne-Liebe von Demo-Kunden — nur Beispielzitate.',
     bulkEmailSubject: 'Angebot NFC-Karten in Menge',
@@ -374,6 +368,22 @@ export const UI_DE: UiStrings = {
     storyTrySuccessTitle: 'Link geöffnet',
     storyTrySuccessBody:
       'In echt würde dein Handy direkt zu deinem Ziel springen — Bewertungen, Website oder Profil.',
+    storyLandingSectionsTitle: 'Five ways your NFC card can help on campus',
+    landingS1Title: 'LinkedIn profile & social URLs',
+    landingS1Body:
+      'Put your LinkedIn URL on the NFC card. When you tap it on someone’s phone, they open your LinkedIn link — no typing. Do the same for other platforms: Discord, Instagram, X, Snapchat, and more — one tap opens the link you chose.',
+    landingS2Title: 'Phone number',
+    landingS2Body:
+      'Save your number as a tap-to-call or tap-to-save link. When someone taps your card instead of manually entering digits, sharing your phone is easier and faster.',
+    landingS3Title: 'Student clubs',
+    landingS3Body:
+      'Student clubs could use NFC cards at tables to share sign-up forms, GroupMe/Discord links, Instagram pages, event calendars, and membership applications.',
+    landingS4Title: 'Resume & portfolio',
+    landingS4Body:
+      'Instead of saying “I’ll email it to you,” a student could tap the card and open a page with their resume, projects, certifications, and work samples. This is useful for CS, design, business, engineering, film, and art students.',
+    landingS5Title: 'Campus events',
+    landingS5Body:
+      'An NFC card or tag could link to event registration, directions, check-in forms, or schedules. It makes tabling and event promotion easier.',
     examplesSectionHead: 'Was deine Karte öffnen kann — echte Beispiele',
     exMapsKicker: 'Maps & Bewertungen',
     exMapsTitle: 'Apple Store Northridge',

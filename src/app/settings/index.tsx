@@ -54,7 +54,7 @@ export default function SettingsIndexScreen() {
         onPress: async () => {
           await clearAccessToken();
           await resetProfileStorage();
-          router.replace('/(auth)/login');
+          router.replace('/');
         },
       },
     ]);
