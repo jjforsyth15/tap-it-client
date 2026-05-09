@@ -2,6 +2,7 @@ import { useAppPreferences } from '@/src/features/appPreferences/AppPreferencesC
 import { useUserProfileOptional } from '@/src/features/profile/UserProfileContext';
 import { Ionicons } from '@expo/vector-icons';
 import * as Haptics from 'expo-haptics';
+import { Image } from 'expo-image';
 import { router, useLocalSearchParams } from 'expo-router';
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import {
@@ -42,6 +43,9 @@ import {
 import { TapitBottomNav, TAPIT_TABS, type TapitTab } from './TapitBottomNav';
 import { TapitOnboardingThemeProvider, useTapitOnboardingTheme } from './TapitOnboardingThemeContext';
 import type { TapitPalette } from './theme';
+
+const LANDING_LOGO = require('../../../photos/logo.png');
+const LANDING_LOGO_SLOT = 48;
 
 function parseParam(v: string | string[] | undefined): string {
   if (typeof v === 'string' && v.trim()) return v.trim();
@@ -205,15 +209,31 @@ function TapitHomeScreenInner({
           fontWeight: '600',
           color: T.text,
         },
-        landingAuthRow: {
+        landingAuthBarWrap: {
           flexDirection: 'row',
           alignItems: 'center',
-          justifyContent: 'flex-end',
-          gap: 10,
           paddingHorizontal: 16,
           paddingVertical: 10,
           borderBottomWidth: StyleSheet.hairlineWidth,
           borderBottomColor: T.border,
+        },
+        landingLogoSlot: {
+          width: LANDING_LOGO_SLOT,
+          height: LANDING_LOGO_SLOT,
+          justifyContent: 'center',
+          alignItems: 'flex-start',
+        },
+        landingLogo: {
+          width: LANDING_LOGO_SLOT - 4,
+          height: LANDING_LOGO_SLOT - 4,
+          maxWidth: '100%',
+        },
+        landingAuthButtons: {
+          flex: 1,
+          flexDirection: 'row',
+          alignItems: 'center',
+          justifyContent: 'center',
+          gap: 10,
         },
         landingAuthBtn: {
           paddingVertical: 8,
@@ -326,29 +346,41 @@ function TapitHomeScreenInner({
   return (
     <SafeAreaView style={[styles.root, { paddingTop: insets.top }]} edges={['top']}>
       {landingAuthBar ? (
-        <View style={styles.landingAuthRow}>
-          <Pressable
-            onPress={() => router.push('/(auth)/login')}
-            style={({ pressed }) => [styles.landingAuthBtn, pressed && { opacity: 0.85 }]}
-            accessibilityRole="button"
-            accessibilityLabel={u.landing.logIn}
-          >
-            <Text style={styles.landingAuthBtnText}>{u.landing.logIn}</Text>
-          </Pressable>
-          <Pressable
-            onPress={() => router.push('/(auth)/register')}
-            style={({ pressed }) => [
-              styles.landingAuthBtn,
-              styles.landingAuthBtnPrimary,
-              pressed && { opacity: 0.9 },
-            ]}
-            accessibilityRole="button"
-            accessibilityLabel={u.landing.createAccount}
-          >
-            <Text style={[styles.landingAuthBtnText, styles.landingAuthBtnTextPrimary]}>
-              {u.landing.createAccount}
-            </Text>
-          </Pressable>
+        <View style={styles.landingAuthBarWrap}>
+          <View style={styles.landingLogoSlot}>
+            <Image
+              source={LANDING_LOGO}
+              style={styles.landingLogo}
+              contentFit="contain"
+              accessibilityRole="image"
+              accessibilityLabel={u.landing.title}
+            />
+          </View>
+          <View style={styles.landingAuthButtons}>
+            <Pressable
+              onPress={() => router.push('/(auth)/login')}
+              style={({ pressed }) => [styles.landingAuthBtn, pressed && { opacity: 0.85 }]}
+              accessibilityRole="button"
+              accessibilityLabel={u.landing.logIn}
+            >
+              <Text style={styles.landingAuthBtnText}>{u.landing.logIn}</Text>
+            </Pressable>
+            <Pressable
+              onPress={() => router.push('/(auth)/register')}
+              style={({ pressed }) => [
+                styles.landingAuthBtn,
+                styles.landingAuthBtnPrimary,
+                pressed && { opacity: 0.9 },
+              ]}
+              accessibilityRole="button"
+              accessibilityLabel={u.landing.createAccount}
+            >
+              <Text style={[styles.landingAuthBtnText, styles.landingAuthBtnTextPrimary]}>
+                {u.landing.createAccount}
+              </Text>
+            </Pressable>
+          </View>
+          <View style={{ width: LANDING_LOGO_SLOT }} />
         </View>
       ) : null}
       {isGuest ? (
