@@ -8,7 +8,16 @@
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.tepzzy.tapitclient",
+      "infoPlist": {
+        "NSAppTransportSecurity": {
+          "NSAllowsLocalNetworking": true,
+          "NSAllowsArbitraryLoads": true
+        },
+        "NSLocalNetworkUsageDescription": "Used on local networks when you open links or optional dev tooling.",
+        "ITSAppUsesNonExemptEncryption": false
+      }
     },
     "android": {
       "adaptiveIcon": {
@@ -21,7 +30,12 @@
       "output": "static"
     },
     "plugins": [
-      ["expo-router", { "root": "./src/app" }],
+      [
+        "expo-router",
+        {
+          "root": "./src/app"
+        }
+      ],
       [
         "expo-image-picker",
         {
@@ -36,11 +50,25 @@
             "backgroundColor": "#000000"
           }
         }
+      ],
+      [
+        "react-native-nfc-manager",
+        {
+          "nfcPermission": "Allow TapIt to read NFC tags."
+        }
       ]
     ],
     "experiments": {
       "typedRoutes": true,
       "reactCompiler": true
+    },
+    "extra": {
+      "router": {
+        "root": "./src/app"
+      },
+      "eas": {
+        "projectId": "633fa6ee-1c50-4c25-9e86-35107730d0bc"
+      }
     }
   }
 }

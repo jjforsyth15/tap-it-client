@@ -7,6 +7,7 @@ import { router, useLocalSearchParams, usePathname, useSegments } from 'expo-rou
 import React, { useEffect, useMemo, useRef } from 'react';
 import { Image, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
+import NfcReader from '../../../NFC/NfcReader';
 
 function paramToString(v: string | string[] | undefined): string | undefined {
   if (typeof v === 'string' && v.trim()) return v.trim();
@@ -252,6 +253,8 @@ export default function DashboardHomeScreen() {
             ))}
           </ScrollView>
         )}
+
+        <NfcReader />
       </ScrollView>
 
       <View style={[styles.bottomNav, { paddingBottom: Math.max(insets.bottom, 12) }]}>
