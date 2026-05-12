@@ -36,6 +36,13 @@ export const UI_FR: UiStrings = {
     chipSideHustle: 'Side business',
     chipEvent: 'Événement',
     activeCardsTitle: 'Cartes actives',
+    tapActivityTitle: 'Activité des taps',
+    tapActivityHint: 'Les totaux par période s’afficheront ici lorsque les données d’analyse seront connectées.',
+    tapRangeDay: 'jour',
+    tapRangeWeek: 'semaine',
+    tapRangeMonth: 'mois',
+    tapRangeYear: 'année',
+    tapTotalTaps: 'taps au total',
     noCardsTitle: 'Pas encore de cartes',
     noCardsBody:
       'Prêt à créer votre première carte NFC ? Lancez le parcours pour définir votre lien et commander une carte.',
@@ -319,49 +326,11 @@ export const UI_FR: UiStrings = {
     guestRibbon: 'Navigation sans compte',
     exitHome: 'Accueil',
     exitBarA11y: 'Retour au tableau de bord',
-    createYourCardTitle: 'Créez votre carte',
-    createYourCardCaption: 'Lien NFC personnel · expédié chez vous',
-    createYourCardA11y: 'Créez votre carte',
     navTabLink: 'lien',
-    navTabServer: 'serveur',
-    navTabEmbed: 'intégration',
-    navTabShip: 'envoi',
-    navTabTry: 'essai',
+    navTabAccount: 'compte',
+    accountPageHint: 'Connectez-vous ou créez un compte pour continuer.',
     storyChooseCallout: 'Choisissez votre lien',
     storyChooseHeaderSub: 'votre destination, vos règles',
-    storyChooseBody1:
-      'Décidez ce qui s’ouvre quand on touche votre carte — vous pouvez pointer vers la page ou l’URL de votre choix.',
-    storyChooseBody2:
-      'Vous gardez la main : changez le lien plus tard quand vous voulez en nous contactant.',
-    storyServerCallout: 'Le lien part vers nos serveurs',
-    storyServerHeaderSub: 'passage sécurisé',
-    storyServerYourPick: 'votre choix',
-    storyServerCloud: 'cloud Tapit',
-    storyServerBody1:
-      'Quand vous commandez, la destination choisie est envoyée en toute sécurité à nos systèmes pour programmer votre carte.',
-    storyServerBody2:
-      'Rien n’atteint la puce tant que nous n’avons pas vérifié votre lien de bout en bout.',
-    storyEmbedCallout: 'Nous vérifions et l’intégrons dans votre carte',
-    storyEmbedHeaderSub: 'encodé et contrôlé',
-    storyEmbedBody1:
-      'Notre encodeur écrit votre URL dans la puce NFC et fait un test d’appui réel avant l’expédition.',
-    storyEmbedBody2:
-      'Comme une clé premium : le lien est fusionné à la carte, pas un autocollant en surface.',
-    storyShipCallout: 'Nous emballons et expédions dans une enveloppe',
-    storyShipHeaderSub: 'en route vers vous',
-    storyShipEnvelope: 'enveloppe suivie',
-    storyShipBody1:
-      'Vos cartes partent sous protection — la plupart des commandes aux États-Unis arrivent en quelques jours ouvrés.',
-    storyTryCallout: 'Essayez-moi',
-    storyTryHeaderSub: 'toucher. connecter. terminé.',
-    storyTryNfcReady: 'NFC prêt',
-    storyTryBody:
-      'Approchez la carte du téléphone — comme Apple Pay, mais pour votre lien.',
-    storyTryBtn: 'Essayer !',
-    storyTryBtnA11y: 'Démo d’appui NFC',
-    storyTrySuccessTitle: 'Lien ouvert',
-    storyTrySuccessBody:
-      'Dans la réalité, le téléphone irait directement à la destination choisie — avis, site ou profil.',
     storyLandingSectionsTitle: 'Five ways your NFC card can help on campus',
     landingS1Title: 'LinkedIn profile & social URLs',
     landingS1Body:

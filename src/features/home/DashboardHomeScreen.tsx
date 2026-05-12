@@ -1,4 +1,5 @@
 import { useAppPreferences } from '@/src/features/appPreferences/AppPreferencesContext';
+import { TapActivityChart } from '@/src/features/home/TapActivityChart';
 import type { AppThemeColors, ColorMode, UserNfcCard } from '@/src/features/profile/profileTypes';
 import { useUserProfile } from '@/src/features/profile/UserProfileContext';
 import { Ionicons } from '@expo/vector-icons';
@@ -252,6 +253,8 @@ export default function DashboardHomeScreen() {
             ))}
           </ScrollView>
         )}
+
+        <TapActivityChart colors={colors} />
       </ScrollView>
 
       <View style={[styles.bottomNav, { paddingBottom: Math.max(insets.bottom, 12) }]}>

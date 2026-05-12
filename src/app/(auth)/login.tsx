@@ -1,9 +1,11 @@
+// No backend is configured. Use the demo account: 12345678@gmail.com / 12345678
+
+
 import { ErrorBanner } from '@/src/components/ErrorBanner';
 import { PasswordField } from '@/src/components/PasswordField';
 import { PrimaryButton } from '@/src/components/PrimaryButton';
 import { Screen } from '@/src/components/Screen';
 import { TextField } from '@/src/components/TextField';
-import { Ionicons } from '@expo/vector-icons';
 import { useAppPreferences } from '@/src/features/appPreferences/AppPreferencesContext';
 import { getAuthErrorMessage } from '@/src/features/auth/authErrors';
 import {
@@ -12,6 +14,7 @@ import {
 } from '@/src/features/auth/demoHardcodedLogin';
 import { validateLoginForm } from '@/src/features/auth/validators';
 import { useUserProfile } from '@/src/features/profile/UserProfileContext';
+import { Ionicons } from '@expo/vector-icons';
 import { router } from 'expo-router';
 import React, { useState } from 'react';
 import {

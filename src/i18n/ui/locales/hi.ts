@@ -36,6 +36,13 @@ export const UI_HI: UiStrings = {
     chipSideHustle: 'साइड हसल',
     chipEvent: 'इवेंट',
     activeCardsTitle: 'सक्रिय कार्ड',
+    tapActivityTitle: 'टैप गतिविधि',
+    tapActivityHint: 'एनालिटिक्स डेटा जुड़ने पर समय सीमा के अनुसार टैप गिनती यहाँ दिखेगी।',
+    tapRangeDay: 'दिन',
+    tapRangeWeek: 'सप्ताह',
+    tapRangeMonth: 'महीना',
+    tapRangeYear: 'वर्ष',
+    tapTotalTaps: 'कुल टैप',
     noCardsTitle: 'अभी कोई कार्ड नहीं',
     noCardsBody:
       'अपना पहला NFC कार्ड बनाने के लिए तैयार हैं? लिंक सेट करने और कार्ड ऑर्डर करने के लिए यात्रा शुरू करें।',
@@ -320,49 +327,11 @@ export const UI_HI: UiStrings = {
     guestRibbon: 'बिना खाते के ब्राउज़ कर रहे हैं',
     exitHome: 'होम',
     exitBarA11y: 'होम डैशबोर्ड पर वापस',
-    createYourCardTitle: 'अपना कार्ड बनाएं',
-    createYourCardCaption: 'व्यक्तिगत NFC लिंक · आप तक शिपिंग',
-    createYourCardA11y: 'अपना कार्ड बनाएं',
     navTabLink: 'लिंक',
-    navTabServer: 'सर्वर',
-    navTabEmbed: 'एम्बेड',
-    navTabShip: 'शिप',
-    navTabTry: 'आज़माएँ',
+    navTabAccount: 'खाता',
+    accountPageHint: 'जारी रखने के लिए लॉग इन करें या खाता बनाएँ।',
     storyChooseCallout: 'अपना लिंक चुनें',
     storyChooseHeaderSub: 'आपका गंतव्य, आपके नियम',
-    storyChooseBody1:
-      'जब कोई आपका कार्ड टैप करे तो क्या खुले — आप किसी भी पेज या URL पर इशारा कर सकते हैं।',
-    storyChooseBody2:
-      'नियंत्रण आपके पास: बाद में कभी भी हमसे संपर्क करके लिंक बदलें।',
-    storyServerCallout: 'लिंक हमारे सर्वर पर जाता है',
-    storyServerHeaderSub: 'सुरक्षित हैंडऑफ़',
-    storyServerYourPick: 'आपकी पसंद',
-    storyServerCloud: 'Tapit क्लाउड',
-    storyServerBody1:
-      'जब आप ऑर्डर करते हैं, आपका चुना गया गंतव्य सुरक्षित रूप से हमारे सिस्टम में जाता है ताकि हम आपका कार्ड प्रोग्राम कर सकें।',
-    storyServerBody2:
-      'जब तक हम आपके लिंक को अंत से अंत तक सत्यापित न कर लें, चिप पर कुछ नहीं जाता।',
-    storyEmbedCallout: 'हम इसे सत्यापित करके आपके कार्ड में एम्बेड करते हैं',
-    storyEmbedHeaderSub: 'एन्कोड और जाँच',
-    storyEmbedBody1:
-      'हमारा एन्कोडर आपका URL NFC चिप में लिखता है और कार्ड भेजने से पहले लाइव टैप टेस्ट चलाता है।',
-    storyEmbedBody2:
-      'इसे प्रीमियम चाबी समझें: लिंक कार्ड से जुड़ा है, सतह पर स्टिकर नहीं।',
-    storyShipCallout: 'हम इसे लिफ़ाफ़े में पैक करके भेजते हैं',
-    storyShipHeaderSub: 'आपकी ओर रास्ते में',
-    storyShipEnvelope: 'ट्रैक किया गया लिफ़ाफ़ा',
-    storyShipBody1:
-      'आपके कार्ड सुरक्षित पैकेजिंग में निकलते हैं — ज़्यादातर अमेरिकी ऑर्डर कुछ कार्यदिवसों में पहुँचते हैं।',
-    storyTryCallout: 'मुझे आज़माएँ',
-    storyTryHeaderSub: 'टैप। कनेक्ट। हो गया।',
-    storyTryNfcReady: 'NFC तैयार',
-    storyTryBody:
-      'कार्ड को फ़ोन पर टैप करें — Apple Pay जैसा, लेकिन आपके लिंक के लिए।',
-    storyTryBtn: 'आज़माएँ!',
-    storyTryBtnA11y: 'NFC टैप डेमो आज़माएँ',
-    storyTrySuccessTitle: 'लिंक खुला',
-    storyTrySuccessBody:
-      'असल में आपका फ़ोन सीधे आपके सेट किए गए गंतव्य पर जाएगा — समीक्षा, साइट या प्रोफ़ाइल।',
     storyLandingSectionsTitle: 'Five ways your NFC card can help on campus',
     landingS1Title: 'LinkedIn profile & social URLs',
     landingS1Body:

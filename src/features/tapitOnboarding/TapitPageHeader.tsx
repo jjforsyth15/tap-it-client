@@ -1,40 +1,13 @@
-import React, { useEffect, useMemo } from 'react';
+import React, { useMemo } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import Animated, { FadeInDown, useAnimatedStyle, useSharedValue, withSpring } from 'react-native-reanimated';
+import Animated, { FadeInDown } from 'react-native-reanimated';
 import { useTapitOnboardingTheme } from './TapitOnboardingThemeContext';
 
 type Props = {
-  activeStep: number;
   subtitle: string;
 };
 
-function StepDot({ active }: { active: boolean }) {
-  const T = useTapitOnboardingTheme();
-  const scale = useSharedValue(active ? 1.35 : 1);
-
-  useEffect(() => {
-    scale.value = withSpring(active ? 1.35 : 1, { damping: 14, stiffness: 220 });
-  }, [active, scale]);
-
-  const animated = useAnimatedStyle(() => ({
-    transform: [{ scale: scale.value }],
-  }));
-
-  return (
-    <Animated.View
-      style={[
-        styles.dotBase,
-        {
-          backgroundColor: active ? T.text : T.dotInactive,
-          opacity: active ? 1 : 0.45,
-        },
-        animated,
-      ]}
-    />
-  );
-}
-
-export function TapitPageHeader({ activeStep, subtitle }: Props) {
+export function TapitPageHeader({ subtitle }: Props) {
   const T = useTapitOnboardingTheme();
   const styles = useMemo(
     () =>
@@ -42,11 +15,6 @@ export function TapitPageHeader({ activeStep, subtitle }: Props) {
         wrap: {
           alignItems: 'center',
           marginBottom: 22,
-        },
-        dots: {
-          flexDirection: 'row',
-          gap: 8,
-          marginBottom: 18,
         },
         brand: {
           fontSize: 28,
@@ -67,11 +35,6 @@ export function TapitPageHeader({ activeStep, subtitle }: Props) {
 
   return (
     <View style={styles.wrap}>
-      <View style={styles.dots}>
-        {[0, 1, 2, 3, 4].map((i) => (
-          <StepDot key={i} active={i === activeStep} />
-        ))}
-      </View>
       <Text style={styles.brand}>TAPIT</Text>
       <Animated.Text key={subtitle} entering={FadeInDown.duration(380).springify()} style={styles.subtitle}>
         {subtitle}
@@ -79,11 +42,3 @@ export function TapitPageHeader({ activeStep, subtitle }: Props) {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  dotBase: {
-    width: 6,
-    height: 6,
-    borderRadius: 3,
-  },
-});

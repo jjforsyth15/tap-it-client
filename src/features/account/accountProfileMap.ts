@@ -1,7 +1,7 @@
 import type { AuthUser } from '@/src/features/auth/types';
 import type { UserProfileState } from '@/src/features/profile/profileTypes';
 
-/** Apply fields from login/register response (local or remote). */
+// Apply fields from login/register response (local or remote)
 export function mergeAuthUserIntoProfile(base: UserProfileState, user: AuthUser): UserProfileState {
   return {
     ...base,

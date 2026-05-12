@@ -33,19 +33,12 @@ import Animated, {
 import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 import { OnboardingPagerProvider } from './OnboardingPagerContext';
 import { LinkStoryScrollView } from './story/LinkStoryScrollView';
-import {
-  StoryPageChooseLink,
-  StoryPageEmbed,
-  StoryPageServer,
-  StoryPageShip,
-  StoryPageTry,
-} from './story/NfcOnboardingPages';
+import { StoryPageChooseLink } from './story/StoryPageChooseLink';
 import { TapitBottomNav, TAPIT_TABS, type TapitTab } from './TapitBottomNav';
 import { TapitOnboardingThemeProvider, useTapitOnboardingTheme } from './TapitOnboardingThemeContext';
 import type { TapitPalette } from './theme';
 
 const LANDING_LOGO = require('../../../photos/logo.png');
-const LANDING_LOGO_SLOT = 48;
 
 function parseParam(v: string | string[] | undefined): string {
   if (typeof v === 'string' && v.trim()) return v.trim();
@@ -57,8 +50,6 @@ type TapitHomeScreenProps = {
   /** When set, shows a bar to return to the main dashboard. */
   showExitToDashboard?: boolean;
   onExitToDashboard?: () => void;
-  /** Landing page: sign-in / sign-up actions above the story. */
-  landingAuthBar?: boolean;
 };
 
 type PageRow = { key: TapitTab };
@@ -156,11 +147,7 @@ function PagerPage({
   );
 }
 
-function TapitHomeScreenInner({
-  showExitToDashboard = false,
-  onExitToDashboard,
-  landingAuthBar = false,
-}: TapitHomeScreenProps) {
+function TapitHomeScreenInner({ showExitToDashboard = false, onExitToDashboard }: TapitHomeScreenProps) {
   const { u } = useAppPreferences();
   const T = useTapitOnboardingTheme();
   const insets = useSafeAreaInsets();
@@ -209,52 +196,6 @@ function TapitHomeScreenInner({
           fontWeight: '600',
           color: T.text,
         },
-        landingAuthBarWrap: {
-          flexDirection: 'row',
-          alignItems: 'center',
-          paddingHorizontal: 16,
-          paddingVertical: 10,
-          borderBottomWidth: StyleSheet.hairlineWidth,
-          borderBottomColor: T.border,
-        },
-        landingLogoSlot: {
-          width: LANDING_LOGO_SLOT,
-          height: LANDING_LOGO_SLOT,
-          justifyContent: 'center',
-          alignItems: 'flex-start',
-        },
-        landingLogo: {
-          width: LANDING_LOGO_SLOT - 4,
-          height: LANDING_LOGO_SLOT - 4,
-          maxWidth: '100%',
-        },
-        landingAuthButtons: {
-          flex: 1,
-          flexDirection: 'row',
-          alignItems: 'center',
-          justifyContent: 'center',
-          gap: 10,
-        },
-        landingAuthBtn: {
-          paddingVertical: 8,
-          paddingHorizontal: 14,
-          borderRadius: 999,
-          borderWidth: StyleSheet.hairlineWidth,
-          borderColor: T.border,
-          backgroundColor: T.surface,
-        },
-        landingAuthBtnPrimary: {
-          backgroundColor: T.blue,
-          borderColor: T.blue,
-        },
-        landingAuthBtnText: {
-          fontSize: 14,
-          fontWeight: '700',
-          color: T.text,
-        },
-        landingAuthBtnTextPrimary: {
-          color: '#ffffff',
-        },
         listWrap: {
           flex: 1,
         },
@@ -265,6 +206,53 @@ function TapitHomeScreenInner({
           flexGrow: 1,
           paddingHorizontal: 20,
           paddingTop: 12,
+        },
+        accountPageScroll: {
+          justifyContent: 'center',
+          gap: 20,
+          paddingVertical: 24,
+        },
+        accountLogoWrap: {
+          alignItems: 'center',
+          width: '100%',
+        },
+        accountLogo: {
+          width: 96,
+          height: 96,
+        },
+        accountPageHint: {
+          fontSize: 16,
+          lineHeight: 22,
+          fontWeight: '500',
+          color: T.muted,
+          textAlign: 'center',
+        },
+        accountAuthCol: {
+          gap: 12,
+          width: '100%',
+          maxWidth: 360,
+          alignSelf: 'center',
+        },
+        authBtn: {
+          paddingVertical: 14,
+          paddingHorizontal: 18,
+          borderRadius: 999,
+          borderWidth: StyleSheet.hairlineWidth,
+          borderColor: T.border,
+          backgroundColor: T.surface,
+          alignItems: 'center',
+        },
+        authBtnPrimary: {
+          backgroundColor: T.blue,
+          borderColor: T.blue,
+        },
+        authBtnText: {
+          fontSize: 16,
+          fontWeight: '700',
+          color: T.text,
+        },
+        authBtnTextPrimary: {
+          color: '#ffffff',
         },
       }),
     [T],
@@ -314,24 +302,69 @@ function TapitHomeScreenInner({
           ) : (
             <ScrollView
               style={styles.pageScroll}
-              contentContainerStyle={scrollContent}
+              contentContainerStyle={[scrollContent, styles.accountPageScroll]}
               showsVerticalScrollIndicator={false}
               keyboardShouldPersistTaps="handled"
               nestedScrollEnabled
             >
-              {index === 1 ? <StoryPageServer /> : null}
-              {index === 2 ? <StoryPageEmbed /> : null}
-              {index === 3 ? <StoryPageShip /> : null}
-              {index === 4 ? (
-                <StoryPageTry onGoToShop={() => router.push('/(auth)/register')} />
-              ) : null}
+              <View style={styles.accountLogoWrap}>
+                <Image
+                  source={LANDING_LOGO}
+                  style={styles.accountLogo}
+                  contentFit="contain"
+                  accessibilityRole="image"
+                  accessibilityLabel={u.landing.title}
+                />
+              </View>
+              <Text style={styles.accountPageHint}>{u.onboarding.accountPageHint}</Text>
+              <View style={styles.accountAuthCol}>
+                <Pressable
+                  onPress={() => router.push('/(auth)/login')}
+                  style={({ pressed }) => [styles.authBtn, pressed && { opacity: 0.85 }]}
+                  accessibilityRole="button"
+                  accessibilityLabel={u.landing.logIn}
+                >
+                  <Text style={styles.authBtnText}>{u.landing.logIn}</Text>
+                </Pressable>
+                <Pressable
+                  onPress={() => router.push('/(auth)/register')}
+                  style={({ pressed }) => [
+                    styles.authBtn,
+                    styles.authBtnPrimary,
+                    pressed && { opacity: 0.9 },
+                  ]}
+                  accessibilityRole="button"
+                  accessibilityLabel={u.landing.createAccount}
+                >
+                  <Text style={[styles.authBtnText, styles.authBtnTextPrimary]}>{u.landing.createAccount}</Text>
+                </Pressable>
+              </View>
             </ScrollView>
           )}
         </PagerPage>
       );
       return page;
     },
-    [insets.bottom, pageWidth, scrollX, styles.pageScroll, styles.pageScrollContent],
+    [
+      insets.bottom,
+      pageWidth,
+      scrollX,
+      styles.accountAuthCol,
+      styles.accountLogo,
+      styles.accountLogoWrap,
+      styles.accountPageHint,
+      styles.accountPageScroll,
+      styles.authBtn,
+      styles.authBtnPrimary,
+      styles.authBtnText,
+      styles.authBtnTextPrimary,
+      styles.pageScroll,
+      styles.pageScrollContent,
+      u.landing.createAccount,
+      u.landing.logIn,
+      u.landing.title,
+      u.onboarding.accountPageHint,
+    ],
   );
 
   const getItemLayout = useCallback(
@@ -345,44 +378,6 @@ function TapitHomeScreenInner({
 
   return (
     <SafeAreaView style={[styles.root, { paddingTop: insets.top }]} edges={['top']}>
-      {landingAuthBar ? (
-        <View style={styles.landingAuthBarWrap}>
-          <View style={styles.landingLogoSlot}>
-            <Image
-              source={LANDING_LOGO}
-              style={styles.landingLogo}
-              contentFit="contain"
-              accessibilityRole="image"
-              accessibilityLabel={u.landing.title}
-            />
-          </View>
-          <View style={styles.landingAuthButtons}>
-            <Pressable
-              onPress={() => router.push('/(auth)/login')}
-              style={({ pressed }) => [styles.landingAuthBtn, pressed && { opacity: 0.85 }]}
-              accessibilityRole="button"
-              accessibilityLabel={u.landing.logIn}
-            >
-              <Text style={styles.landingAuthBtnText}>{u.landing.logIn}</Text>
-            </Pressable>
-            <Pressable
-              onPress={() => router.push('/(auth)/register')}
-              style={({ pressed }) => [
-                styles.landingAuthBtn,
-                styles.landingAuthBtnPrimary,
-                pressed && { opacity: 0.9 },
-              ]}
-              accessibilityRole="button"
-              accessibilityLabel={u.landing.createAccount}
-            >
-              <Text style={[styles.landingAuthBtnText, styles.landingAuthBtnTextPrimary]}>
-                {u.landing.createAccount}
-              </Text>
-            </Pressable>
-          </View>
-          <View style={{ width: LANDING_LOGO_SLOT }} />
-        </View>
-      ) : null}
       {isGuest ? (
         <View style={styles.guestRibbon}>
           <Text style={styles.guestRibbonText}>{u.common.guestRibbon}</Text>
@@ -414,8 +409,8 @@ function TapitHomeScreenInner({
             keyboardShouldPersistTaps="handled"
             onMomentumScrollEnd={onMomentumScrollEnd}
             getItemLayout={getItemLayout}
-            initialNumToRender={5}
-            windowSize={5}
+            initialNumToRender={2}
+            windowSize={3}
             decelerationRate="fast"
             onScrollToIndexFailed={(info) => {
               const wait = new Promise((r) => setTimeout(r, 100));

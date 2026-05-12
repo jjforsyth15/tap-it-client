@@ -14,31 +14,28 @@ import { useOnboardingPager } from '../OnboardingPagerContext';
 import { useTapitOnboardingTheme } from '../TapitOnboardingThemeContext';
 
 /** Bundled asset: project root `photos/001NFC.png` */
-export const NFC_CARD_IMAGE = require('../../../../photos/001NFC.png');
+const NFC_CARD_IMAGE = require('../../../../photos/001NFC.png');
 
 /** ISO-style card ratio; image uses `contain` so the full card stays visible without cropping. */
 const CARD_ASPECT = 1.586;
 
-type Props = {
-  pageIndex: number;
-};
-
-export function NfcCardHero({ pageIndex }: Props) {
+export function NfcCardHero() {
   const T = useTapitOnboardingTheme();
   const { width: screenW } = useWindowDimensions();
   const { scrollX, pageWidth } = useOnboardingPager();
   const float = useSharedValue(0);
 
   const cardMaxW = Math.min(screenW - 40, 340);
+  const pageIndex = 0;
 
   useEffect(() => {
-    const dur = 2800 + pageIndex * 120;
+    const dur = 2800;
     float.value = withRepeat(
       withTiming(1, { duration: dur, easing: Easing.inOut(Easing.sin) }),
       -1,
       true,
     );
-  }, [float, pageIndex]);
+  }, [float]);
 
   const pagePresenceStyle = useAnimatedStyle(() => {
     const t = (scrollX.value - pageIndex * pageWidth) / pageWidth;
@@ -56,9 +53,8 @@ export function NfcCardHero({ pageIndex }: Props) {
     const focus = interpolate(t, [-1, 0, 1], [0.35, 1, 0.35], Extrapolation.CLAMP);
     const bob = interpolate(float.value, [0, 1], [0, -6]) * focus;
     const tilt = interpolate(float.value, [0, 1], [-1.2, 1.2]) * focus;
-    const pageTilt = [0, -0.8, 0.6, -0.5, 0.4][pageIndex] ?? 0;
     return {
-      transform: [{ translateY: bob }, { rotateZ: `${tilt + pageTilt}deg` }],
+      transform: [{ translateY: bob }, { rotateZ: `${tilt}deg` }],
     };
   });
 

@@ -3,7 +3,7 @@ import React, { useMemo } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { useTapitOnboardingTheme } from './TapitOnboardingThemeContext';
 
-export const TAPIT_TABS = ['link', 'server', 'embed', 'ship', 'try'] as const;
+export const TAPIT_TABS = ['link', 'account'] as const;
 export type TapitTab = (typeof TAPIT_TABS)[number];
 
 type Props = {
@@ -16,10 +16,7 @@ export function TapitBottomNav({ active, onChange }: Props) {
   const tabLabel: Record<TapitTab, string> = useMemo(
     () => ({
       link: u.onboarding.navTabLink,
-      server: u.onboarding.navTabServer,
-      embed: u.onboarding.navTabEmbed,
-      ship: u.onboarding.navTabShip,
-      try: u.onboarding.navTabTry,
+      account: u.onboarding.navTabAccount,
     }),
     [u],
   );
