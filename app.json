@@ -8,6 +8,10 @@
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
+      "bundleIdentifier": "org.tapitcard.app",
+      "associatedDomains": [
+        "applinks:tapitcard.org"
+      ],
       "supportsTablet": true
     },
     "android": {
@@ -36,6 +40,9 @@
             "backgroundColor": "#000000"
           }
         }
+      ],
+      [
+        "expo-secure-store"
       ]
     ],
     "experiments": {
