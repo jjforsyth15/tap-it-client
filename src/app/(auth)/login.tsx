@@ -1,21 +1,18 @@
 // No backend is configured. Use the demo account: 12345678@gmail.com / 12345678
 
 
+import { loginUser } from '@/src/api/auth';
 import { ErrorBanner } from '@/src/components/ErrorBanner';
 import { PasswordField } from '@/src/components/PasswordField';
 import { PrimaryButton } from '@/src/components/PrimaryButton';
 import { Screen } from '@/src/components/Screen';
 import { TextField } from '@/src/components/TextField';
 import { useAppPreferences } from '@/src/features/appPreferences/AppPreferencesContext';
-import { getAuthErrorMessage } from '@/src/features/auth/authErrors';
-import {
-  isDemoHardcodedLogin,
-  signInWithDemoHardcodedCredentials,
-} from '@/src/features/auth/demoHardcodedLogin';
 import { validateLoginForm } from '@/src/features/auth/validators';
 import { useUserProfile } from '@/src/features/profile/UserProfileContext';
 import { Ionicons } from '@expo/vector-icons';
 import { router } from 'expo-router';
+import * as SecureStore from 'expo-secure-store';
 import React, { useState } from 'react';
 import {
   KeyboardAvoidingView,
@@ -43,23 +40,23 @@ export default function LoginScreen() {
     }
     setLoading(true);
     try {
-      if (isDemoHardcodedLogin(email, password)) {
-        const user = await signInWithDemoHardcodedCredentials();
-        applyAuthUser(user);
-        void refreshFromServer();
-        const displayName = user.display_name?.trim() || user.email;
-        router.replace({
-          pathname: '/home',
-          params: { displayName },
-        });
-        return;
-      }
-      setError(
-        'No backend is configured. Use the demo account: 12345678@gmail.com / 12345678',
-      );
-      return;
+      const data = await loginUser(email, password);
+
+
+      await SecureStore.setItemAsync('access_token', data.access_token);
+
+      const savedToken = await SecureStore.getItemAsync('access_token');
+      console.log('Access token saved:', savedToken);
+      console.log('Login successful, response data:', data);
+
+      const displayName = data.first_name;
+      router.replace({
+        pathname: '/home',
+        params: { displayName },
+      });
+
     } catch (err) {
-      setError(getAuthErrorMessage(err));
+      console.log("Login error:", err);
     } finally {
       setLoading(false);
     }
