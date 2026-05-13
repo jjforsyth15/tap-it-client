@@ -123,8 +123,6 @@ export const UI_KO: UiStrings = {
     headerTitle: '프로필',
     avatarHint: '탭하여 프로필 사진 올리기',
     memberSince: '가입일',
-    friendsTitle: '친구',
-    friendsHint: '샘플 목록 — 백엔드를 연결하면 실제 친구를 표시할 수 있어요.',
     backA11y: '홈으로 돌아가기',
     settingsA11y: '설정 열기',
   },

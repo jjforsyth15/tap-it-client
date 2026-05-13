@@ -129,8 +129,6 @@ export const UI_HI: UiStrings = {
     headerTitle: 'प्रोफ़ाइल',
     avatarHint: 'प्रोफ़ाइल फ़ोटो अपलोड करने के लिए टैप करें',
     memberSince: 'सदस्यता से',
-    friendsTitle: 'दोस्त',
-    friendsHint: 'नमूना सूची — असली दोस्तों के लिए बैकएंड जोड़ें।',
     backA11y: 'होम पर वापस',
     settingsA11y: 'सेटिंग्स खोलें',
   },

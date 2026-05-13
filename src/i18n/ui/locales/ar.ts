@@ -123,8 +123,6 @@ export const UI_AR: UiStrings = {
     headerTitle: 'الملف الشخصي',
     avatarHint: 'اضغط لرفع صورة الملف الشخصي',
     memberSince: 'عضو منذ',
-    friendsTitle: 'الأصدقاء',
-    friendsHint: 'قائمة تجريبية — اربط خادمًا لعرض أصدقاء حقيقيين.',
     backA11y: 'العودة إلى الرئيسية',
     settingsA11y: 'فتح الإعدادات',
   },

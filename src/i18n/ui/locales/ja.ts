@@ -123,8 +123,6 @@ export const UI_JA: UiStrings = {
     headerTitle: 'プロフィール',
     avatarHint: 'タップしてプロフィール写真をアップロード',
     memberSince: '登録日',
-    friendsTitle: 'フレンド',
-    friendsHint: 'サンプル一覧 — バックエンドを接続すると実際のフレンドを表示できます。',
     backA11y: 'ホームに戻る',
     settingsA11y: '設定を開く',
   },

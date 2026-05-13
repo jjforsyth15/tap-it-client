@@ -113,8 +113,6 @@ export const UI_EN: UiStrings = {
     headerTitle: 'Profile',
     avatarHint: 'Tap to upload a profile picture',
     memberSince: 'Member since',
-    friendsTitle: 'Friends',
-    friendsHint: '',
     backA11y: 'Back to home',
     settingsA11y: 'Open settings',
   },

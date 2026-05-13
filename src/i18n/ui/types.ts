@@ -112,8 +112,6 @@ export type UiStrings = {
     headerTitle: string;
     avatarHint: string;
     memberSince: string;
-    friendsTitle: string;
-    friendsHint: string;
     backA11y: string;
     settingsA11y: string;
   };

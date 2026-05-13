@@ -1,4 +1,3 @@
-import { MOCK_FRIENDS } from '@/src/constants/mockProfileData';
 import { useAppPreferences } from '@/src/features/appPreferences/AppPreferencesContext';
 import { ProfileIdentityFields } from '@/src/features/profile/ProfileIdentityFields';
 import { useUserProfile } from '@/src/features/profile/UserProfileContext';
@@ -145,23 +144,6 @@ export function ProfileScreen() {
             day: 'numeric',
           })}
         </Text>
-
-        <Text style={[styles.sectionTitle, { color: colors.text, marginTop: 20 }]}>{u.profile.friendsTitle}</Text>
-        <Text style={[styles.sectionHint, { color: colors.muted }]}>{u.profile.friendsHint}</Text>
-        <View style={styles.friendsList}>
-          {MOCK_FRIENDS.map((f) => (
-            <View key={f.id} style={[styles.friendRow, { borderColor: colors.border, backgroundColor: colors.surface }]}>
-              <View style={[styles.friendAvatar, { backgroundColor: colors.accent }]}>
-                <Text style={[styles.friendAvatarText, { color: colors.onAccent }]}>{f.name.charAt(0)}</Text>
-              </View>
-              <View style={{ flex: 1 }}>
-                <Text style={[styles.friendName, { color: colors.text }]}>{f.name}</Text>
-                {f.handle ? <Text style={[styles.friendHandle, { color: colors.muted }]}>{f.handle}</Text> : null}
-              </View>
-              <Ionicons name="chevron-forward" size={18} color={colors.muted} />
-            </View>
-          ))}
-        </View>
       </ScrollView>
     </SafeAreaView>
   );
@@ -219,19 +201,5 @@ const styles = StyleSheet.create({
   },
   avatarHint: { marginTop: 10, fontSize: 12 },
   sectionTitle: { fontSize: 17, fontWeight: '700', marginBottom: 4 },
-  sectionHint: { fontSize: 13, lineHeight: 18, marginBottom: 10 },
   memberSince: { fontSize: 16, fontWeight: '600' },
-  friendsList: { gap: 10, marginTop: 4 },
-  friendRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 12,
-    padding: 12,
-    borderRadius: 12,
-    borderWidth: 1,
-  },
-  friendAvatar: { width: 40, height: 40, borderRadius: 20, alignItems: 'center', justifyContent: 'center' },
-  friendAvatarText: { fontSize: 16, fontWeight: '700' },
-  friendName: { fontSize: 15, fontWeight: '600' },
-  friendHandle: { fontSize: 12, marginTop: 2 },
 });

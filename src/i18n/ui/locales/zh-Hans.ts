@@ -123,8 +123,6 @@ export const UI_ZH_HANS: UiStrings = {
     headerTitle: '个人资料',
     avatarHint: '点按上传头像',
     memberSince: '加入时间',
-    friendsTitle: '好友',
-    friendsHint: '示例列表 — 接入后端后可显示真实好友。',
     backA11y: '返回首页',
     settingsA11y: '打开设置',
   },

@@ -129,8 +129,6 @@ export const UI_FR: UiStrings = {
     headerTitle: 'Profil',
     avatarHint: 'Touchez pour ajouter une photo de profil',
     memberSince: 'Membre depuis',
-    friendsTitle: 'Amis',
-    friendsHint: 'Liste d’exemple — branchez un backend pour afficher de vrais amis.',
     backA11y: 'Retour à l’accueil',
     settingsA11y: 'Ouvrir les réglages',
   },

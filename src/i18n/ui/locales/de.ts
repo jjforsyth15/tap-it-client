@@ -130,8 +130,6 @@ export const UI_DE: UiStrings = {
     headerTitle: 'Profil',
     avatarHint: 'Tippe, um ein Profilbild hochzuladen',
     memberSince: 'Mitglied seit',
-    friendsTitle: 'Freunde',
-    friendsHint: 'Beispielliste — verbinde ein Backend für echte Freunde.',
     backA11y: 'Zurück zum Start',
     settingsA11y: 'Einstellungen öffnen',
   },
