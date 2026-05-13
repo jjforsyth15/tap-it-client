@@ -60,12 +60,41 @@ export function deriveTheme(mode: ColorMode, accentHex: string): AppThemeColors 
   };
 }
 
-/** NFC cards the user has ordered or saved locally (shown on Home and My cards). */
+//  NFC cards the user has ordered or saved locally (shown on Home and My cards)
 export type UserNfcCard = {
   id: string;
   title: string;
   variant: 'light' | 'dark';
 };
+
+/** A saved card profile — each one holds a name + set of social links. */
+export type CardProfile = {
+  id: string;
+  name: string;
+  socialInstagram: string;
+  socialTwitter: string;
+  socialFacebook: string;
+  socialLinkedin: string;
+  socialTiktok: string;
+  socialWebsite: string;
+  createdAt: string;
+};
+
+export function createCardProfile(name: string): CardProfile {
+  return {
+    id: Date.now().toString(36) + Math.random().toString(36).slice(2, 7),
+    name,
+    socialInstagram: '',
+    socialTwitter: '',
+    socialFacebook: '',
+    socialLinkedin: '',
+    socialTiktok: '',
+    socialWebsite: '',
+    createdAt: new Date().toISOString(),
+  };
+}
+
+export const CARD_PROFILES_STORAGE_KEY = '@tap_it/card_profiles_v1';
 
 export type UserProfileState = {
   displayName: string;

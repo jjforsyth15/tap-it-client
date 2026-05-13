@@ -1,11 +1,13 @@
 import { useAppPreferences } from '@/src/features/appPreferences/AppPreferencesContext';
-import { ProfileIdentityFields } from '@/src/features/profile/ProfileIdentityFields';
+import type { CardProfile } from '@/src/features/profile/profileTypes';
 import { useUserProfile } from '@/src/features/profile/UserProfileContext';
+import { mainTabIsActive } from '@/src/navigation/mainTabNav';
 import { Ionicons } from '@expo/vector-icons';
 import * as ImagePicker from 'expo-image-picker';
-import { router, useLocalSearchParams } from 'expo-router';
+import { router, useLocalSearchParams, usePathname, useSegments } from 'expo-router';
+import { countWords } from '@/src/features/profile/profileTypes';
 import React, { useEffect, useMemo, useRef } from 'react';
-import { Alert, Image, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Alert, Image, Pressable, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
 import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 
 function paramToString(v: string | string[] | undefined): string | undefined {
@@ -14,14 +16,18 @@ function paramToString(v: string | string[] | undefined): string | undefined {
   return undefined;
 }
 
+type HomeTabKey = 'home' | 'profile';
+
 export function ProfileScreen() {
   const insets = useSafeAreaInsets();
+  const pathname = usePathname();
+  const segments = useSegments();
   const raw = useLocalSearchParams<{ displayName?: string | string[]; guest?: string | string[] }>();
   const guestRaw = (paramToString(raw.guest) || '').toLowerCase();
   const isGuest = guestRaw === '1' || guestRaw === 'true' || guestRaw === 'yes';
   const routeDisplayName = paramToString(raw.displayName);
 
-  const { profile, colors, setProfile, setColorMode, setAccentHex, hydrated } = useUserProfile();
+  const { profile, colors, setProfile, cardProfiles, hydrated } = useUserProfile();
   const { u } = useAppPreferences();
   const seededFromRoute = useRef(false);
 
@@ -47,6 +53,16 @@ export function ProfileScreen() {
   const openSettings = () => {
     router.push('/settings');
   };
+
+  const onTabPress = (key: HomeTabKey) => {
+    if (key === 'home') {
+      router.replace({ pathname: '/home', params: journeyParams });
+      return;
+    }
+    router.replace({ pathname: '/profile', params: journeyParams });
+  };
+
+  const tabActive = (key: HomeTabKey) => mainTabIsActive(pathname, segments, key);
 
   const pickImage = async () => {
     if (isGuest) {
@@ -104,7 +120,7 @@ export function ProfileScreen() {
       </View>
 
       <ScrollView
-        contentContainerStyle={[styles.scroll, { paddingBottom: 28 + insets.bottom }]}
+        contentContainerStyle={[styles.scroll, { paddingBottom: 100 + insets.bottom }]}
         keyboardShouldPersistTaps="handled"
         showsVerticalScrollIndicator={false}
       >
@@ -126,17 +142,90 @@ export function ProfileScreen() {
           <Text style={[styles.avatarHint, { color: colors.muted }]}>{u.profile.avatarHint}</Text>
         </View>
 
-        <ProfileIdentityFields
-          profile={profile}
-          colors={colors}
-          setProfile={setProfile}
-          setColorMode={setColorMode}
-          setAccentHex={setAccentHex}
-          isGuest={isGuest}
-          context="profile"
-        />
+        <Text style={[styles.displayName, { color: colors.text }]}>{profile.displayName}</Text>
 
-        <Text style={[styles.sectionTitle, { color: colors.text, marginTop: 16 }]}>{u.profile.memberSince}</Text>
+        <Text style={[styles.bioLabel, { color: colors.muted }]}>Bio (20 words max)</Text>
+        <TextInput
+          style={[
+            styles.bioInput,
+            {
+              backgroundColor: colors.surface,
+              borderColor: countWords(profile.bio) > 20 ? '#f87171' : colors.border,
+              color: colors.text,
+            },
+          ]}
+          placeholder="Tell people what you do…"
+          placeholderTextColor={colors.muted}
+          multiline
+          textAlignVertical="top"
+          value={profile.bio}
+          onChangeText={(t) => setProfile({ bio: t })}
+          editable={!isGuest}
+        />
+        <Text style={[styles.wordCount, { color: countWords(profile.bio) > 20 ? '#f87171' : colors.muted }]}>
+          {countWords(profile.bio)}/20 words
+        </Text>
+
+        <Text style={[styles.sectionTitle, { color: colors.text }]}>{u.profile.pickUserTitle}</Text>
+        <Text style={[styles.sectionHint, { color: colors.muted }]}>{u.profile.pickUserHint}</Text>
+
+        {cardProfiles.length === 0 ? (
+          <View style={[styles.emptyCard, { backgroundColor: colors.surface, borderColor: colors.border }]}>
+            <Ionicons name="person-add-outline" size={32} color={colors.muted} />
+            <Text style={[styles.emptyTitle, { color: colors.text }]}>{u.profile.noUsersYet}</Text>
+            <Text style={[styles.emptyHint, { color: colors.muted }]}>{u.profile.noUsersHint}</Text>
+          </View>
+        ) : (
+          <View style={styles.cardList}>
+            {cardProfiles.map((cp: CardProfile) => {
+              const linkCount = [
+                cp.socialInstagram,
+                cp.socialTwitter,
+                cp.socialFacebook,
+                cp.socialLinkedin,
+                cp.socialTiktok,
+                cp.socialWebsite,
+              ].filter(Boolean).length;
+              return (
+                <Pressable
+                  key={cp.id}
+                  onPress={() => router.push({ pathname: '/view-card-profile', params: { id: cp.id } })}
+                  style={({ pressed }) => [
+                    styles.userCard,
+                    { backgroundColor: colors.surface, borderColor: colors.border },
+                    pressed && { opacity: 0.8 },
+                  ]}
+                >
+                  <View style={[styles.userCardIcon, { backgroundColor: `${colors.accent}22` }]}>
+                    <Ionicons name="person" size={20} color={colors.accent} />
+                  </View>
+                  <View style={styles.userCardBody}>
+                    <Text style={[styles.userCardName, { color: colors.text }]}>{cp.name}</Text>
+                    <Text style={[styles.userCardMeta, { color: colors.muted }]}>
+                      {linkCount} {linkCount === 1 ? 'link' : 'links'}
+                    </Text>
+                  </View>
+                  <Ionicons name="chevron-forward" size={18} color={colors.muted} />
+                </Pressable>
+              );
+            })}
+          </View>
+        )}
+
+        <Pressable
+          onPress={() => router.push('/create-card-profile')}
+          style={({ pressed }) => [
+            styles.createBtn,
+            { backgroundColor: colors.accent },
+            pressed && { opacity: 0.85 },
+          ]}
+          accessibilityRole="button"
+        >
+          <Ionicons name="add" size={20} color={colors.onAccent} />
+          <Text style={[styles.createBtnText, { color: colors.onAccent }]}>{u.profile.createUser}</Text>
+        </Pressable>
+
+        <Text style={[styles.sectionTitle, { color: colors.text, marginTop: 24 }]}>{u.profile.memberSince}</Text>
         <Text style={[styles.memberSince, { color: colors.text }]}>
           {new Date(profile.memberSinceIso).toLocaleDateString(undefined, {
             year: 'numeric',
@@ -145,6 +234,25 @@ export function ProfileScreen() {
           })}
         </Text>
       </ScrollView>
+
+      <View style={[styles.bottomNav, { paddingBottom: Math.max(insets.bottom, 12), backgroundColor: colors.bg, borderTopColor: colors.border }]}>
+        {(
+          [
+            { icon: 'home-outline' as const, key: 'home' as const },
+            { icon: 'person-outline' as const, key: 'profile' as const },
+          ] as const
+        ).map((tab) => {
+          const active = tabActive(tab.key);
+          return (
+            <Pressable key={tab.key} style={styles.tabItem} onPress={() => onTabPress(tab.key)}>
+              <Ionicons name={tab.icon} size={22} color={active ? colors.text : colors.muted} />
+              <Text style={[styles.tabLabel, { color: colors.muted }, active && styles.tabLabelActive && { color: colors.text }]}>
+                {u.nav[tab.key]}
+              </Text>
+            </Pressable>
+          );
+        })}
+      </View>
     </SafeAreaView>
   );
 }
@@ -200,6 +308,71 @@ const styles = StyleSheet.create({
     borderWidth: 1,
   },
   avatarHint: { marginTop: 10, fontSize: 12 },
+  displayName: { fontSize: 22, fontWeight: '800', textAlign: 'center', marginBottom: 16 },
+  bioLabel: { fontSize: 14, fontWeight: '500', marginBottom: 6 },
+  bioInput: {
+    minHeight: 80,
+    borderWidth: 1,
+    borderRadius: 8,
+    paddingHorizontal: 12,
+    paddingVertical: 10,
+    fontSize: 15,
+  },
+  wordCount: { fontSize: 12, marginTop: 6, alignSelf: 'flex-end', marginBottom: 20 },
   sectionTitle: { fontSize: 17, fontWeight: '700', marginBottom: 4 },
+  sectionHint: { fontSize: 13, lineHeight: 18, marginBottom: 14 },
+  emptyCard: {
+    alignItems: 'center',
+    gap: 8,
+    padding: 24,
+    borderRadius: 14,
+    borderWidth: 1,
+    marginBottom: 16,
+  },
+  emptyTitle: { fontSize: 16, fontWeight: '700' },
+  emptyHint: { fontSize: 13, lineHeight: 18, textAlign: 'center' },
+  cardList: { gap: 10, marginBottom: 16 },
+  userCard: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    padding: 14,
+    borderRadius: 12,
+    borderWidth: 1,
+    gap: 12,
+  },
+  userCardIcon: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  userCardBody: { flex: 1 },
+  userCardName: { fontSize: 15, fontWeight: '700' },
+  userCardMeta: { fontSize: 12, marginTop: 2 },
+  createBtn: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 8,
+    paddingVertical: 14,
+    borderRadius: 999,
+    marginBottom: 8,
+  },
+  createBtnText: { fontSize: 15, fontWeight: '700' },
   memberSince: { fontSize: 16, fontWeight: '600' },
+  bottomNav: {
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    bottom: 0,
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    alignItems: 'flex-start',
+    paddingTop: 10,
+    borderTopWidth: 1,
+  },
+  tabItem: { alignItems: 'center', gap: 4, minWidth: 72 },
+  tabLabel: { fontSize: 10, fontWeight: '500' },
+  tabLabelActive: { fontWeight: '700' },
 });

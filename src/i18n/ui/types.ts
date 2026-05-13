@@ -114,6 +114,34 @@ export type UiStrings = {
     memberSince: string;
     backA11y: string;
     settingsA11y: string;
+    pickUserTitle: string;
+    pickUserHint: string;
+    createUser: string;
+    noUsersYet: string;
+    noUsersHint: string;
+  };
+  createCardProfile: {
+    headerTitle: string;
+    nameLabel: string;
+    nameHint: string;
+    namePlaceholder: string;
+    socialTitle: string;
+    socialHint: string;
+    instagram: string;
+    twitter: string;
+    facebook: string;
+    linkedin: string;
+    tiktok: string;
+    website: string;
+    placeholderInstagram: string;
+    placeholderTwitter: string;
+    placeholderFacebook: string;
+    placeholderLinkedin: string;
+    placeholderTiktok: string;
+    placeholderWebsite: string;
+    save: string;
+    cancel: string;
+    nameRequired: string;
   };
   profileFields: {
     displayNameHintProfile: string;
@@ -217,8 +245,8 @@ export type UiStrings = {
     guestRibbon: string;
     exitHome: string;
     exitBarA11y: string;
-    navTabLink: string;
-    navTabAccount: string;
+    navTabHome: string;
+    navTabProfile: string;
     accountPageHint: string;
     storyChooseCallout: string;
     storyChooseHeaderSub: string;

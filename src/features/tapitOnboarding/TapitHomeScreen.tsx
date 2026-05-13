@@ -153,7 +153,7 @@ function TapitHomeScreenInner({ showExitToDashboard = false, onExitToDashboard }
   const insets = useSafeAreaInsets();
   const { width: pageWidth } = useWindowDimensions();
   const params = useLocalSearchParams<{ displayName?: string | string[]; guest?: string | string[] }>();
-  const [activeTab, setActiveTab] = useState<TapitTab>('link');
+  const [activeTab, setActiveTab] = useState<TapitTab>('home');
   const scrollX = useSharedValue(0);
   const listRef = useRef<FlatList<PageRow> | null>(null);
 

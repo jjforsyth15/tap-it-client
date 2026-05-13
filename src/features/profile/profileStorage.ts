@@ -1,5 +1,5 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { defaultUserProfile, PROFILE_STORAGE_KEY, type UserProfileState } from '@/src/features/profile/profileTypes';
+import { defaultUserProfile, PROFILE_STORAGE_KEY, CARD_PROFILES_STORAGE_KEY, type UserProfileState, type CardProfile } from '@/src/features/profile/profileTypes';
 
 function mergeWithDefaults(parsed: unknown): UserProfileState {
   const base = defaultUserProfile();
@@ -47,4 +47,19 @@ export async function saveUserProfile(state: UserProfileState): Promise<void> {
 
 export async function clearUserProfile(): Promise<void> {
   await AsyncStorage.removeItem(PROFILE_STORAGE_KEY);
+}
+
+export async function loadCardProfiles(): Promise<CardProfile[]> {
+  try {
+    const raw = await AsyncStorage.getItem(CARD_PROFILES_STORAGE_KEY);
+    if (!raw) return [];
+    const parsed = JSON.parse(raw);
+    return Array.isArray(parsed) ? parsed : [];
+  } catch {
+    return [];
+  }
+}
+
+export async function saveCardProfiles(profiles: CardProfile[]): Promise<void> {
+  await AsyncStorage.setItem(CARD_PROFILES_STORAGE_KEY, JSON.stringify(profiles));
 }
