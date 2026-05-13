@@ -13,16 +13,18 @@ import {
   defaultUserProfile,
   deriveTheme,
   type AppThemeColors,
+  type CardProfile,
   type ColorMode,
   type UserNfcCard,
   type UserProfileState,
 } from '@/src/features/profile/profileTypes';
-import { clearUserProfile, loadUserProfile, saveUserProfile } from '@/src/features/profile/profileStorage';
+import { clearUserProfile, loadUserProfile, saveUserProfile, loadCardProfiles, saveCardProfiles } from '@/src/features/profile/profileStorage';
 
 type UserProfileContextValue = {
   hydrated: boolean;
   profile: UserProfileState;
   myCards: UserNfcCard[];
+  cardProfiles: CardProfile[];
   cardsLoading: boolean;
   colors: AppThemeColors;
   setProfile: (patch: Partial<UserProfileState>) => void;
@@ -33,6 +35,9 @@ type UserProfileContextValue = {
   refreshMyCards: () => Promise<void>;
   refreshFromServer: () => Promise<void>;
   applyAuthUser: (user: AuthUser) => void;
+  addCardProfile: (cp: CardProfile) => void;
+  updateCardProfile: (id: string, patch: Partial<CardProfile>) => void;
+  deleteCardProfile: (id: string) => void;
 };
 
 const UserProfileContext = createContext<UserProfileContextValue | null>(null);
@@ -41,6 +46,7 @@ export function UserProfileProvider({ children }: { children: React.ReactNode })
   const [hydrated, setHydrated] = useState(false);
   const [profile, setProfileState] = useState<UserProfileState>(() => defaultUserProfile());
   const [myCards, setMyCards] = useState<UserNfcCard[]>([]);
+  const [cardProfiles, setCardProfiles] = useState<CardProfile[]>([]);
   const cardsLoading = false;
   const latestStateRef = useRef<UserProfileState>(defaultUserProfile());
 
@@ -83,12 +89,37 @@ export function UserProfileProvider({ children }: { children: React.ReactNode })
     [setProfile],
   );
 
+  const addCardProfile = useCallback((cp: CardProfile) => {
+    setCardProfiles((prev) => {
+      const next = [...prev, cp];
+      void saveCardProfiles(next);
+      return next;
+    });
+  }, []);
+
+  const updateCardProfile = useCallback((id: string, patch: Partial<CardProfile>) => {
+    setCardProfiles((prev) => {
+      const next = prev.map((cp) => (cp.id === id ? { ...cp, ...patch } : cp));
+      void saveCardProfiles(next);
+      return next;
+    });
+  }, []);
+
+  const deleteCardProfile = useCallback((id: string) => {
+    setCardProfiles((prev) => {
+      const next = prev.filter((cp) => cp.id !== id);
+      void saveCardProfiles(next);
+      return next;
+    });
+  }, []);
+
   const resetProfileStorage = useCallback(async () => {
     await clearUserProfile();
     const fresh = await loadUserProfile();
     latestStateRef.current = fresh;
     setProfileState(fresh);
     setMyCards([]);
+    setCardProfiles([]);
   }, []);
 
   const refreshMyCards = useCallback(async () => {
@@ -111,10 +142,11 @@ export function UserProfileProvider({ children }: { children: React.ReactNode })
   useEffect(() => {
     let cancelled = false;
     void (async () => {
-      const local = await loadUserProfile();
+      const [local, savedCards] = await Promise.all([loadUserProfile(), loadCardProfiles()]);
       if (!cancelled) {
         latestStateRef.current = local;
         setProfileState(local);
+        setCardProfiles(savedCards);
       }
       if (!cancelled) setHydrated(true);
     })();
@@ -130,6 +162,7 @@ export function UserProfileProvider({ children }: { children: React.ReactNode })
       hydrated,
       profile,
       myCards,
+      cardProfiles,
       cardsLoading,
       colors,
       setProfile,
@@ -140,13 +173,20 @@ export function UserProfileProvider({ children }: { children: React.ReactNode })
       refreshMyCards,
       refreshFromServer,
       applyAuthUser,
+      addCardProfile,
+      updateCardProfile,
+      deleteCardProfile,
     }),
     [
+      cardProfiles,
       cardsLoading,
       colors,
       hydrated,
       myCards,
       profile,
+      addCardProfile,
+      updateCardProfile,
+      deleteCardProfile,
       applyAuthUser,
       refreshFromServer,
       refreshMyCards,

@@ -19,6 +19,8 @@ export default function RootLayout() {
           <Stack.Screen name="(auth)" options={{ headerShown: false }} />
           <Stack.Screen name="home" options={{ headerShown: false }} />
           <Stack.Screen name="profile" options={{ headerShown: false }} />
+          <Stack.Screen name="create-card-profile" options={{ headerShown: false }} />
+          <Stack.Screen name="view-card-profile" options={{ headerShown: false }} />
           <Stack.Screen name="settings" options={{ headerShown: false }} />
         </Stack>
         </AppPreferencesProvider>
