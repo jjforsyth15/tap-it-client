@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react';
-import type { SharedValue } from 'react-native-reanimated';
 import { createContext, useContext } from 'react';
+import type { SharedValue } from 'react-native-reanimated';
 
 export type OnboardingPagerApi = {
   scrollX: SharedValue<number>;

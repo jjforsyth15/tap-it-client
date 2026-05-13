@@ -18,7 +18,7 @@ type RangeConfig = {
 };
 
 function dayPartLabels(): string[] {
-  return ['12a', '4a', '8a', '12p', '4p', '8p'];
+  return ['12 am', '4 am', '8 am', '12 pm', '4 pm', '8 pm'];
 }
 
 function weekdayNarrowLabels(locale: string): string[] {
