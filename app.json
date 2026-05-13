@@ -50,12 +50,6 @@
             "backgroundColor": "#000000"
           }
         }
-      ],
-      [
-        "react-native-nfc-manager",
-        {
-          "nfcPermission": "Allow TapIt to read NFC tags."
-        }
       ]
     ],
     "experiments": {
