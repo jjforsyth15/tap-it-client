@@ -1,9 +1,11 @@
+import { createProfile } from '@/src/api/profile';
 import { TextField } from '@/src/components/TextField';
 import { useAppPreferences } from '@/src/features/appPreferences/AppPreferencesContext';
 import { createCardProfile } from '@/src/features/profile/profileTypes';
 import { useUserProfile } from '@/src/features/profile/UserProfileContext';
 import { Ionicons } from '@expo/vector-icons';
 import { router } from 'expo-router';
+import * as SecureStore from 'expo-secure-store';
 import React, { useState } from 'react';
 import { Alert, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -23,6 +25,8 @@ export function CreateCardProfileScreen() {
   const [website, setWebsite] = useState('');
   const [urlErrors, setUrlErrors] = useState<Record<string, string>>({});
 
+  const [loading, setLoading] = useState(false);
+
   const tf = {
     labelColor: colors.muted,
     inputBackgroundColor: colors.surface,
@@ -35,7 +39,7 @@ export function CreateCardProfileScreen() {
     return url.trim().startsWith('https://');
   };
 
-  const handleSave = () => {
+  const handleSave = async () => {
     if (!name.trim()) {
       Alert.alert(s.headerTitle, s.nameRequired);
       return;
@@ -52,7 +56,7 @@ export function CreateCardProfileScreen() {
 
     const errors: Record<string, string> = {};
     for (const link of links) {
-      if (!isValidUrl(link.value)) {
+      if (link.value.trim() && !isValidUrl(link.value)) {
         errors[link.key] = `Double check the URL — it should start with https://`;
       }
     }
@@ -71,7 +75,24 @@ export function CreateCardProfileScreen() {
     cp.socialTiktok = tiktok.trim();
     cp.socialWebsite = website.trim();
     addCardProfile(cp);
-    router.back();
+
+    try {
+      setLoading(true);
+
+      const token = await SecureStore.getItemAsync('access_token');
+
+      if (!token) 
+        throw new Error('No access token found. Please log in again.');
+
+      const response = await createProfile(token, name, "", website);
+
+      console.log('Profile creation response:', response);
+      router.replace('/profile');
+    } catch (error) {
+      console.error('Error creating profile:', error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
