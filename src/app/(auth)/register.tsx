@@ -1,14 +1,14 @@
+import { registerUser } from '@/src/api/auth';
 import { ErrorBanner } from '@/src/components/ErrorBanner';
-import { Ionicons } from '@expo/vector-icons';
 import { LinkText } from '@/src/components/LinkText';
 import { PasswordField } from '@/src/components/PasswordField';
 import { PrimaryButton } from '@/src/components/PrimaryButton';
 import { Screen } from '@/src/components/Screen';
 import { TextField } from '@/src/components/TextField';
 import { getAuthErrorMessage } from '@/src/features/auth/authErrors';
-import { registerAccountLocal } from '@/src/features/auth/localRegister';
 import { validateRegisterForm } from '@/src/features/auth/validators';
 import { useUserProfile } from '@/src/features/profile/UserProfileContext';
+import { Ionicons } from '@expo/vector-icons';
 import { router } from 'expo-router';
 import React, { useState } from 'react';
 import {
@@ -41,7 +41,6 @@ export default function RegisterScreen() {
       emailConfirm,
       password,
       passwordConfirm,
-      phone,
     });
     if (!result.valid) {
       setError(result.message);
@@ -49,18 +48,14 @@ export default function RegisterScreen() {
     }
     setLoading(true);
     try {
-      const response = await registerAccountLocal({
-        firstName: firstName.trim(),
-        lastName: lastName.trim(),
-        email: email.trim(),
-        password,
-        phone: phone.trim(),
-      });
-      applyAuthUser(response.user);
-      void refreshFromServer();
-      const displayName = response.user.display_name?.trim() || response.user.email;
+      const response = await registerUser(email, password, firstName, lastName);
+      console.log('Registration response data:', response);
+      
+
+      const displayName = firstName;
+      alert('Registration successful! Please log in with your new credentials.');
       router.replace({
-        pathname: '/home',
+        pathname: '/login',
         params: { displayName },
       });
     } catch (err) {
@@ -134,13 +129,6 @@ export default function RegisterScreen() {
             onChangeText={setPasswordConfirm}
             placeholder="••••••••"
             autoComplete="new-password"
-          />
-          <TextField
-            label="Phone number"
-            value={phone}
-            onChangeText={setPhone}
-            placeholder="(555) 000-0000"
-            keyboardType="phone-pad"
           />
           <ErrorBanner message={error} />
           <PrimaryButton title="Create account" onPress={handleContinue} loading={loading} />

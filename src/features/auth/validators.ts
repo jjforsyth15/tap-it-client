@@ -58,9 +58,8 @@ export function validateRegisterForm(params: {
   emailConfirm: string;
   password: string;
   passwordConfirm: string;
-  phone: string;
 }): ValidationResult {
-  const { firstName, lastName, email, emailConfirm, password, passwordConfirm, phone } = params;
+  const { firstName, lastName, email, emailConfirm, password, passwordConfirm} = params;
   if (!firstName.trim()) return { valid: false, message: 'Not filled out. Please complete all fields.' };
   if (!lastName.trim()) return { valid: false, message: 'Not filled out. Please complete all fields.' };
   const emailResult = validateEmail(email);
@@ -73,7 +72,6 @@ export function validateRegisterForm(params: {
   if (!passLength.valid) return passLength;
   const passMatch = validatePasswordMatch(password, passwordConfirm);
   if (!passMatch.valid) return passMatch;
-  if (!phone.trim()) return { valid: false, message: 'Not filled out. Please complete all fields.' };
   return { valid: true };
 }
 

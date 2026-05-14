@@ -41,7 +41,7 @@ export default function LoginScreen() {
     setLoading(true);
     try {
       const data = await loginUser(email, password);
-
+      console.log('Login response data:', data);
 
       await SecureStore.setItemAsync('access_token', data.access_token);
 
