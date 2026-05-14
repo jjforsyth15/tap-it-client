@@ -1,14 +1,17 @@
+import { getMyProfiles } from '@/src/api/profile';
 import { useAppPreferences } from '@/src/features/appPreferences/AppPreferencesContext';
-import type { CardProfile } from '@/src/features/profile/profileTypes';
+import { countWords } from '@/src/features/profile/profileTypes';
 import { useUserProfile } from '@/src/features/profile/UserProfileContext';
 import { mainTabIsActive } from '@/src/navigation/mainTabNav';
 import { Ionicons } from '@expo/vector-icons';
 import * as ImagePicker from 'expo-image-picker';
 import { router, useLocalSearchParams, usePathname, useSegments } from 'expo-router';
-import { countWords } from '@/src/features/profile/profileTypes';
-import React, { useEffect, useMemo, useRef } from 'react';
+import * as SecureStore from 'expo-secure-store';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { Alert, Image, Pressable, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
 import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
+
+
 
 function paramToString(v: string | string[] | undefined): string | undefined {
   if (typeof v === 'string' && v.trim()) return v.trim();
@@ -19,6 +22,34 @@ function paramToString(v: string | string[] | undefined): string | undefined {
 type HomeTabKey = 'home' | 'profile';
 
 export function ProfileScreen() {
+
+  const [profiles, setProfiles] = useState<any[]>([]);
+const [loading, setLoading] = useState(false);
+
+useEffect(() => {
+  const loadProfiles = async () => {
+    try {
+      setLoading(true);
+
+      const token = await SecureStore.getItemAsync('access_token');
+      if (!token) 
+        throw new Error('No access token found. Please log in again.');
+
+      const data = await getMyProfiles(token);
+      setProfiles(data);
+      console.log('Fetched profiles:', data);
+    } catch (error) {
+      console.error('Error loading profiles:', error);
+      Alert.alert('Error', 'Failed to load profiles. Please try again.');
+    } finally {
+      setLoading(false);
+    }
+  };
+  
+    loadProfiles();
+  }, []);
+
+  
   const insets = useSafeAreaInsets();
   const pathname = usePathname();
   const segments = useSegments();
@@ -169,7 +200,7 @@ export function ProfileScreen() {
         <Text style={[styles.sectionTitle, { color: colors.text }]}>{u.profile.pickUserTitle}</Text>
         <Text style={[styles.sectionHint, { color: colors.muted }]}>{u.profile.pickUserHint}</Text>
 
-        {cardProfiles.length === 0 ? (
+        {profiles.length === 0 ? (
           <View style={[styles.emptyCard, { backgroundColor: colors.surface, borderColor: colors.border }]}>
             <Ionicons name="person-add-outline" size={32} color={colors.muted} />
             <Text style={[styles.emptyTitle, { color: colors.text }]}>{u.profile.noUsersYet}</Text>
@@ -177,19 +208,14 @@ export function ProfileScreen() {
           </View>
         ) : (
           <View style={styles.cardList}>
-            {cardProfiles.map((cp: CardProfile) => {
+            {profiles.map((profile) => {
               const linkCount = [
-                cp.socialInstagram,
-                cp.socialTwitter,
-                cp.socialFacebook,
-                cp.socialLinkedin,
-                cp.socialTiktok,
-                cp.socialWebsite,
+                profile.website_url,
               ].filter(Boolean).length;
               return (
                 <Pressable
-                  key={cp.id}
-                  onPress={() => router.push({ pathname: '/view-card-profile', params: { id: cp.id } })}
+                  key={profile.profile_id}
+                  onPress={() => router.push({ pathname: '/view-card-profile', params: { id: profile.profile_id } })}
                   style={({ pressed }) => [
                     styles.userCard,
                     { backgroundColor: colors.surface, borderColor: colors.border },
@@ -200,7 +226,7 @@ export function ProfileScreen() {
                     <Ionicons name="person" size={20} color={colors.accent} />
                   </View>
                   <View style={styles.userCardBody}>
-                    <Text style={[styles.userCardName, { color: colors.text }]}>{cp.name}</Text>
+                    <Text style={[styles.userCardName, { color: colors.text }]}>{profile.profile_name}</Text>
                     <Text style={[styles.userCardMeta, { color: colors.muted }]}>
                       {linkCount} {linkCount === 1 ? 'link' : 'links'}
                     </Text>

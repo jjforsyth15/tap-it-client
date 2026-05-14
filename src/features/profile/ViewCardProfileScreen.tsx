@@ -13,6 +13,10 @@ type SocialEntry = {
 };
 
 export function ViewCardProfileScreen() {
+  
+
+
+
   const insets = useSafeAreaInsets();
   const { colors, cardProfiles } = useUserProfile();
   const { u } = useAppPreferences();
